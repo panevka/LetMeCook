@@ -2,8 +2,10 @@ package com.letmecook.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -99,9 +101,11 @@ fun App() {
 
                                 }
                             }
-                            Button(onClick = {} ){
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                            Button(onClick = {}) {
                                 Text("Join", style = MaterialTheme.typography.labelSmall, textAlign = TextAlign.Center)
                             }
+                        }
                         }
 
                     }
