@@ -99,6 +99,9 @@ fun App() {
 
                                 }
                             }
+                            Button(onClick = {} ){
+                                Text("Join", style = MaterialTheme.typography.labelSmall, textAlign = TextAlign.Center)
+                            }
                         }
 
                     }
