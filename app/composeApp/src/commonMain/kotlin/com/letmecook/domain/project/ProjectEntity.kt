@@ -5,7 +5,7 @@ enum class PaymentType {
     GRATITUDE,
     EQUITY,
     SYMBOLIC,
-    VOUCHER
+    VOUCHER,
 }
 
 enum class TechnicalStack {
@@ -16,7 +16,13 @@ enum class TechnicalStack {
     JULIA,
     ADA,
     SCALA,
-    OCAML
+    OCAML,
 }
 
-data class ProjectEntity (val name: String, val description: String, val tags: Array<String>, val paymentType: PaymentType, val technicalStack: TechnicalStack)
+data class ProjectEntity(
+    val name: String,
+    val description: String,
+    val tags: Array<String>,
+    val paymentType: PaymentType,
+    val technicalStack: TechnicalStack,
+)
