@@ -76,10 +76,11 @@ fun App() {
                     },
                 )
             }
-        ) {
+        ) { innerPadding ->
             Column(
                 modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer).safeContentPadding()
-                    .padding(20.dp).fillMaxWidth(),
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
