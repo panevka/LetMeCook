@@ -2,6 +2,7 @@ package com.letmecook.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,8 +43,10 @@ import app.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import com.letmecook.domain.project.PaymentType
+import com.letmecook.domain.project.ProjectDetailedView
 import com.letmecook.domain.project.ProjectEntity
 import com.letmecook.domain.project.TechnicalStack
+import kotlin.random.Random
 
 @Composable
 @Preview
@@ -65,18 +68,22 @@ fun App() {
 
     val mockProjects = initMockData();
 
+    var showDetailedProjectView by remember {mutableStateOf(false)}
+    var clickedProject: ProjectEntity? by remember {mutableStateOf(null)}
+
     MaterialTheme {
         Scaffold(
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        Button(onClick = { }) {
+                        Button(onClick = { showDetailedProjectView = false }) {
                             Text("Home")
                         }
                     },
                 )
             }
         ) { innerPadding ->
+
             Column(
                 modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer).safeContentPadding()
                     .padding(innerPadding)
@@ -85,6 +92,11 @@ fun App() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
             ) {
+                clickedProject.let { project ->
+                    if (showDetailedProjectView && project != null) {
+                        ProjectDetailedView(project)
+                    }
+                }
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
@@ -124,7 +136,10 @@ fun App() {
                                     }
                                 }
                                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                                    Button(onClick = {}) {
+                                    Button(onClick = {
+                                        clickedProject = project
+                                        showDetailedProjectView = true
+                                    }  ) {
                                         Text(
                                             "Join",
                                             style = MaterialTheme.typography.labelSmall,
