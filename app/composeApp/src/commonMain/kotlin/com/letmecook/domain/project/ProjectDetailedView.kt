@@ -10,7 +10,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun ProjectDetailedView (project: ProjectEntity) {
+internal fun ProjectDetailedView (project: ProjectEntity) {
 
     MaterialTheme {
         Column(
