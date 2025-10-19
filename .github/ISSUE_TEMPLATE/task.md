@@ -1,3 +1,12 @@
+---
+name: 'Task '
+about: Chore that has to be done, usually feature sub-issue
+title: "[BACKEND]/[FRONTEND]"
+labels: task
+assignees: panevka
+
+---
+
 **SCOPE**
 <!--- What is this task responsible for? What is the idea for applied functionality? -->
 

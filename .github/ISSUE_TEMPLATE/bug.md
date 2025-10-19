@@ -1,3 +1,11 @@
+---
+name: Bug
+about: Create a report to help us improve
+title: "[BUG]"
+labels: bug
+assignees: panevka
+
+---
 
 <!--- Provide a general summary of the issue in the Title above -->
 
@@ -22,8 +30,10 @@
 <!--- Not obligatory, but suggest a fix or reason for the bug -->
 N/A
 
+
 ## Context
 <!--- How has this bug affected you? What were you trying to accomplish? -->
+
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
