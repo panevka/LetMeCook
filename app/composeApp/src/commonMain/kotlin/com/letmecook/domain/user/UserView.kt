@@ -1,5 +1,4 @@
 package com.letmecook.domain.user
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,7 +43,7 @@ internal fun UserView () {
             avatarUrl = "https://img.freepik.com/free-psd/yellow-gift-with-golden-ribbon-icon-sign-symbol-3d-background-illustration_56104-2422.jpg" ,
             bio = "sample bioooo a123123dfafjkl",
             websiteUrl ="https://docs.github.com/en/pages" ,
-            externalAccounts = null
+            githubUrl = "https://github.com/torvalds"
         ))}
 
         val fullName = "${mockUser.firstName} ${mockUser.lastName}"
@@ -69,6 +68,7 @@ internal fun UserView () {
             Text(text=mockUser.bio ?: "", style = MaterialTheme.typography.bodySmall)
             Text(text= mockUser.websiteUrl.let { "Website: $it" }, style = MaterialTheme.typography.bodySmall)
 
+            Text(text= mockUser.githubUrl.let { "Github: $it" }, style = MaterialTheme.typography.bodySmall)
             Button(
                 onClick = { showPopup = true },
             ){}
@@ -122,6 +122,13 @@ internal fun UserView () {
                 label = {Text("avatarUrl")}
             )
 
+                TextField(
+                    value = mockUser.githubUrl,
+                    onValueChange = { newValue: String ->
+                        mockUser = mockUser.copy(githubUrl = newValue)
+                    } ,
+                    label = {Text("Github Account")}
+                )
                 Button(onClick = { showPopup = false}){
                     Text("Save")
                 }
