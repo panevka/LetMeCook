@@ -7,11 +7,12 @@ internal data class User(
     var avatarUrl: String,
     var bio: String,
     var websiteUrl: String,
-    var externalAccounts: Map<ExternalAccount.Platform, ExternalAccount>?
+    var githubUrl: String
+//    var externalAccounts: Map<ExternalAccount.Platform, ExternalAccount>?
 )
 
-internal data class ExternalAccount(val platform: Platform, val url: String ) {
-    enum class Platform {
-        GITHUB, LINKEDIN
-    }
-};
+//internal data class ExternalAccount(val platform: Platform, val url: String ) {
+//    enum class Platform {
+//        GITHUB, LINKEDIN
+//    }
+//};
