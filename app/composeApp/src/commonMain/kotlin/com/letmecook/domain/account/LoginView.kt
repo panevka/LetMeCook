@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.letmecook.app.PostList
 import com.letmecook.app.SignUp
 import com.letmecook.app.currentUser
+import com.letmecook.app.userAuthorized
 import com.letmecook.app.userDb
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.sign
@@ -43,11 +45,12 @@ internal fun LoginView(navController: NavController) {
         TextField(value = password, onValueChange = { password = it}, modifier = Modifier.width(300.dp), label = { Text("Password") })
 
         Button(onClick = {
-            text = if(userDb[email] == password){
+            if(userDb[email] == password){
                 currentUser = Pair(email, password)
-                "Successful login"
+                userAuthorized?.value = true;
+                navController.navigate(PostList)
             } else {
-                "Wrong password"
+                text = "Wrong password"
             }
 
         }, modifier = Modifier.width(300.dp)) {

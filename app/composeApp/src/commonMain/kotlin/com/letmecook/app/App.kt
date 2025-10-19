@@ -36,34 +36,37 @@ object SignUp
 
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
+
+//var userAuthorized = remember{mutableStateOf(false)}
+var userAuthorized: MutableState<Boolean>? = null;
 @Composable
 @Preview
 fun App() {
 
     val navController = rememberNavController()
+    userAuthorized = remember{mutableStateOf(false)}
 
     MaterialTheme {
         Scaffold(
             bottomBar = {
-                BottomAppBar(
-                    actions = {
-                        Button(onClick = {
-                        navController.navigate(PostList)
-                        }) {
-                            Text("Home")
-                        }
-                        Button(onClick = { navController.navigate(Profile) }) {
-                            Text("Profile")
-                        }
-                        Button(onClick = { navController.navigate(Login) }) {
-                            Text("Login")
-                        }
-                    },
-                )
+                if(userAuthorized?.value == true) {
+                    BottomAppBar(
+                        actions = {
+                            Button(onClick = {
+                                navController.navigate(PostList)
+                            }) {
+                                Text("Home")
+                            }
+                            Button(onClick = { navController.navigate(Profile) }) {
+                                Text("Profile")
+                            }
+                        },
+                    )
+                }
             }
         ) { innerPadding ->
 
-            NavHost(navController = navController, startDestination = PostList, modifier = Modifier
+            NavHost(navController = navController, startDestination = Login, modifier = Modifier
                .safeContentPadding()
                .padding(innerPadding)
                 .fillMaxSize()
