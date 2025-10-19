@@ -71,7 +71,9 @@ internal fun UserView () {
             Text(text= mockUser.githubUrl.let { "Github: $it" }, style = MaterialTheme.typography.bodySmall)
             Button(
                 onClick = { showPopup = true },
-            ){}
+            ){
+               Text("Edit profile")
+            }
 
         }
 

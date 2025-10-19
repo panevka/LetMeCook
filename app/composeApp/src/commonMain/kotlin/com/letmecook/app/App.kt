@@ -37,7 +37,6 @@ object SignUp
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
 
-//var userAuthorized = remember{mutableStateOf(false)}
 var userAuthorized: MutableState<Boolean>? = null;
 @Composable
 @Preview
