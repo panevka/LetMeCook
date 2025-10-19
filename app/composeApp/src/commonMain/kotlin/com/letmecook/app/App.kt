@@ -22,9 +22,6 @@ import com.letmecook.domain.user.UserView
 import kotlinx.serialization.Serializable
 
 
-sealed class Routes {
-
-}
 @Serializable
 object Profile
 
@@ -37,6 +34,8 @@ object Login
 @Serializable
 object SignUp
 
+val userDb = HashMap<String, String>();
+var currentUser: Pair<String, String>? = null;
 @Composable
 @Preview
 fun App() {

@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.letmecook.app.currentUser
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -16,6 +17,7 @@ internal fun UserView () {
             modifier = Modifier.fillMaxSize()
         ) {
             Text("text user profile view")
+            Text("currently logged in user: ${currentUser?.first} ${currentUser?.second}")
         }
 
 }
