@@ -50,7 +50,7 @@ var userAuthorized: MutableState<Boolean>? = null;
 fun App() {
 
     val navController = rememberNavController()
-    userAuthorized = remember{mutableStateOf(true)}
+    userAuthorized = remember{mutableStateOf(false)}
 
     MaterialTheme {
         Scaffold(
