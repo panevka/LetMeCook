@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.letmecook.domain.account.LoginView
 import com.letmecook.domain.account.SignUpView
+import com.letmecook.domain.project.ProjectCreateView
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import com.letmecook.domain.project.ProjectListView
@@ -36,6 +37,9 @@ object Login
 
 @Serializable
 object SignUp
+
+@Serializable
+object CreatePost
 
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
@@ -63,7 +67,7 @@ fun App() {
                                 Text("Profile")
                             }
                             Button(
-                                onClick = {},
+                                onClick = { navController.navigate(CreatePost )},
                             ) {
                                 Text("+")
                             }
@@ -82,6 +86,7 @@ fun App() {
                 composable<PostList> { ProjectListView() }
                 composable<Login> { LoginView(navController) }
                 composable<SignUp> { SignUpView(navController) }
+                composable<CreatePost> { ProjectCreateView(navController) }
             }
 
         }
