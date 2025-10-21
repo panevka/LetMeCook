@@ -1,6 +1,6 @@
 package com.letmecook.domain.project
 
-internal enum class PaymentType {
+enum class PaymentType {
     MONEY,
     GRATITUDE,
     EQUITY,
@@ -8,7 +8,7 @@ internal enum class PaymentType {
     VOUCHER,
 }
 
-internal enum class TechnicalStack {
+enum class TechnicalStack {
     REACT,
     SPRING,
     KOTLIN,
@@ -19,7 +19,7 @@ internal enum class TechnicalStack {
     OCAML,
 }
 
-internal data class ProjectEntity(
+data class ProjectEntity(
     val name: String,
     val description: String,
     val tags: Array<String>,
