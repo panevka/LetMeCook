@@ -24,5 +24,5 @@ internal data class ProjectEntity(
     val description: String,
     val tags: Array<String>,
     val paymentType: PaymentType,
-    val technicalStack: TechnicalStack,
+    val technicalStack: Array<TechnicalStack>,
 )

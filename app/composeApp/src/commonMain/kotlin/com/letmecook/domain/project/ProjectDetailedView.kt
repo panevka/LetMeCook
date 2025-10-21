@@ -18,7 +18,7 @@ internal fun ProjectDetailedView (project: ProjectEntity) {
         ) {
             Text(project.name, style = MaterialTheme.typography.titleLarge)
             Text(project.description, style = MaterialTheme.typography.titleLarge)
-            Text(project.technicalStack.toString(), style = MaterialTheme.typography.titleLarge)
+            Text(project.technicalStack.joinToString(", "), style = MaterialTheme.typography.titleLarge)
             Text(project.paymentType.toString(), style = MaterialTheme.typography.titleLarge)
             project.tags.map {
                 tag ->
