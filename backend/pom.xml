@@ -104,6 +104,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- test detection -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*Spec.java</include>
+						<include>**/*Spec.groovy</include>
+						<include>**/*Specification.groovy</include>
+						<include>**/*Test.java</include>
+						<include>**/*Test.groovy</include>
+					</includes>
+				</configuration>
+			</plugin>
+
 			<!-- groovy compilation -->
 			<plugin>
 				<groupId>org.codehaus.gmavenplus</groupId>
