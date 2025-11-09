@@ -89,7 +89,7 @@ class UserSpec extends Specification {
         }
 
         def "A user should not be able to have a first name shorter than 2 characters"() {
-                given: "firstName that is blank"
+                given: "firstName that too short"
                 def validUsername = "Player123"
                 def tooShortFirstName = "A"
 
@@ -101,13 +101,80 @@ class UserSpec extends Specification {
         }
 
         def "A user should not be able to have a first name longer than 30 characters"() {
-                given: "firstName that is blank"
+                given: "firstName that is too long"
                 def validUsername = "Player123"
                 def maxLength = 30
                 def tooLongFirstName = "A" * (maxLength + 1)
 
                 when:
                 def createdUser = User.create(validUsername, tooLongFirstName)
+
+                then:
+                def ex = thrown(IllegalArgumentException)
+        }
+
+        def "A user should be able to have a last name"() {
+                given: "lastName that meets all rules"
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def lastName = "Smith"
+
+                when:
+                def createdUser = User.create(validUsername, validFirstName, lastName)
+
+                then:
+                createdUser.getLastName() == lastName
+        }
+
+        def "A user should be able to not have a last name"() {
+                given: "lastName that is null"
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def lastName = null
+
+                when:
+                def createdUser = User.create(validUsername, validFirstName, null)
+
+                then:
+                createdUser.getLastName() == lastName
+        }
+
+        def "A user should not be able to have a blank last name"() {
+                given: "lastName that is blank"
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def blankLastName = ""
+
+                when:
+                def createdUser = User.create(validUsername, validFirstName, blankLastName)
+
+                then:
+                def ex = thrown(IllegalArgumentException)
+        }
+
+        def "A user should not be able to have a last name shorter than 2 characters"() {
+                given: "lastName that is too short"
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def tooShortLastName = "A"
+
+                when:
+                User.create(validUsername, validFirstName, tooShortLastName)
+
+                then:
+                def ex = thrown(IllegalArgumentException)
+        }
+
+        def "A user should not be able to have a last name longer than 30 characters"() {
+                given: "last name that is too long"
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+
+                def maxLength = 30
+                def tooLongLastName = "A" * (maxLength + 1)
+
+                when:
+                def createdUser = User.create(validUsername, validFirstName, tooLongLastName)
 
                 then:
                 def ex = thrown(IllegalArgumentException)

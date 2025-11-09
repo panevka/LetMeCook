@@ -4,8 +4,9 @@ class User {
 
     private final String username;
     private final String firstName;
+    private final String lastName;
 
-    private User(String username, String firstName) {
+    private User(String username, String firstName, String lastName) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -24,17 +25,31 @@ class User {
         if (firstName != null && firstName.length() > 30) {
             throw new IllegalArgumentException("First name must be at most 30 characters");
         }
+        if (lastName != null && lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name cannot be blank");
+        }
+        if (lastName != null && lastName.length() < 2) {
+            throw new IllegalArgumentException("Last name must be at least 2 characters");
+        }
+        if (lastName != null && lastName.length() > 30) {
+            throw new IllegalArgumentException("Last name must be at most 30 characters");
+        }
 
         this.username = username;
         this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     static User create(String username) {
-        return new User(username, null);
+        return new User(username, null, null);
     }
 
     static User create(String username, String firstName) {
-        return new User(username, firstName);
+        return new User(username, firstName, null);
+    }
+
+    static User create(String username, String firstName, String lastName) {
+        return new User(username, firstName, lastName);
     }
 
     String getUsername() {
@@ -43,6 +58,10 @@ class User {
 
     String getFirstName() {
         return this.firstName;
+    }
+
+    String getLastName() {
+        return this.lastName;
     }
 
 }
