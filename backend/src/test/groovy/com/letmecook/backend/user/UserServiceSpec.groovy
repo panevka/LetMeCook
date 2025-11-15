@@ -4,16 +4,11 @@ import spock.lang.Specification
 
 class UserServiceSpec extends Specification {
 
-    def "user service exists" () {
-        when:
-        def userService = new UserService()
-        then:
-        noExceptionThrown()
-    }
+    def userRepository = new InMemoryUserRepository()
+    def userService = new UserService(userRepository)
 
     def "user service creates a user" () {
         given:
-        def userService = new UserService()
         def username = 'testuser'
 
         when:
@@ -25,7 +20,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow username below 3 characters"() {
         given: 'username that is too short'
-        def userService = new UserService()
         def username = 'A'
 
         when:
@@ -37,7 +31,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow username above 30 characters"() {
         given: 'username that is too long'
-        def userService = new UserService()
         def username = 'a' * 31
 
         when:
@@ -49,7 +42,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must username that is 3 characters long"() {
         given:
-        def userService = new UserService()
         def username = 'A' * 3
 
         when:
@@ -61,7 +53,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow firstName above 30 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a' * 31
 
@@ -74,7 +65,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow firstName below 3 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a'
 
@@ -87,7 +77,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow firstName with 3 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a' * 3
 
@@ -100,7 +89,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow lastName below 3 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a'
@@ -114,7 +102,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow lastName above 30 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 31
@@ -128,7 +115,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow lastName with exactly 3 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 3
@@ -142,7 +128,6 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow lastName with exactly 30 characters"() {
         given:
-        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 30
@@ -152,6 +137,57 @@ class UserServiceSpec extends Specification {
 
         then:
         noExceptionThrown()
+    }
+
+    def "user service must allow creating user with given parameters"() {
+        given:
+        def username = 'Some Username'
+        def firstName = 'Some Firstname'
+        def lastName = 'Some Lastname'
+
+        when:
+        def createdUser = userService.createUser(username, firstName, lastName)
+
+        then:
+        createdUser.getUsername() == username
+        createdUser.getFirstName() == firstName
+        createdUser.getLastName() == lastName
+    }
+
+    def "user service must allow retrieval of created user"() {
+        given:
+        def username = 'Some Username'
+        def firstName = 'Some Firstname'
+        def lastName = 'Some Lastname'
+
+        when:
+        def createdUser = userService.createUser(username, firstName, lastName)
+        def retrievedUser = userService.getUserById(createdUser.getId())
+
+        then:
+        retrievedUser == createdUser
+    }
+
+    def "user service must allow retrieval of multiple created users"() {
+        given:
+        def username1 = 'Some Username'
+        def firstName1 = 'Some Firstname'
+        def lastName1 = 'Some Lastname'
+
+        def username2 = 'Some Username'
+        def firstName2 = 'Some Firstname'
+        def lastName2 = 'Some Lastname'
+
+        when:
+        def createdUser = userService.createUser(username1, firstName1, lastName1)
+        def retrievedUser = userService.getUserById(createdUser.getId())
+
+        def anotherCreatedUser = userService.createUser(username2, firstName2, lastName2)
+        def anotherRetrievedUser = userService.getUserById(anotherCreatedUser.getId())
+
+        then:
+        createdUser == retrievedUser
+        anotherCreatedUser == anotherRetrievedUser
     }
 
 }
