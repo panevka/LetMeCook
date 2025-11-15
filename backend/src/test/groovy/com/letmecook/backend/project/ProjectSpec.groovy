@@ -18,5 +18,25 @@ class ProjectSpec extends Specification {
 		"Uno projecto" || "Uno projecto"
 	}
 
+	def "a project title should not be null"() {
+		given:
+		def title = null
 
+		when:
+		def ex = new Project(title)
+
+		then:
+		thrown(IllegalArgumentException)
+	}
+
+	def "a project title should not be blank"() {
+		given:
+		def title = ""
+
+		when:
+		def ex = new Project(title)
+
+		then:
+		thrown(IllegalArgumentException)
+	}
 }
