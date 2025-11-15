@@ -25,10 +25,11 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow username below 3 characters"() {
         given: 'username that is too short'
+        def userService = new UserService()
         def username = 'A'
 
         when:
-        def createdUser = User.create(username)
+        def createdUser = userService.createUser(username)
 
         then:
         thrown(IllegalArgumentException)
@@ -36,10 +37,11 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow username above 30 characters"() {
         given: 'username that is too long'
+        def userService = new UserService()
         def username = 'a' * 31
 
         when:
-        def createdUser = User.create(username)
+        def createdUser = userService.createUser(username)
 
         then:
         thrown(IllegalArgumentException)
@@ -47,10 +49,11 @@ class UserServiceSpec extends Specification {
 
     def "user service must username that is 3 characters long"() {
         given:
+        def userService = new UserService()
         def username = 'A' * 3
 
         when:
-        def createdUser = User.create(username)
+        def createdUser = userService.createUser(username)
 
         then:
         noExceptionThrown()
@@ -58,11 +61,12 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow firstName above 30 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a' * 31
 
         when:
-        def createdUser = User.create(username, firstName)
+        def createdUser = userService.createUser(username, firstName)
 
         then:
         thrown(IllegalArgumentException)
@@ -70,11 +74,12 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow firstName below 3 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a'
 
         when:
-        def createdUser = User.create(username, firstName)
+        def createdUser = userService.createUser(username, firstName)
 
         then:
         thrown(IllegalArgumentException)
@@ -82,11 +87,12 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow firstName with 3 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'a' * 3
 
         when:
-        def createdUser = User.create(username, firstName)
+        def createdUser = userService.createUser(username, firstName)
 
         then:
         noExceptionThrown()
@@ -94,12 +100,13 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow lastName below 3 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a'
 
         when:
-        def createdUser = User.create(username, firstName, lastName)
+        def createdUser = userService.createUser(username, firstName, lastName)
 
         then:
         thrown(IllegalArgumentException)
@@ -107,12 +114,13 @@ class UserServiceSpec extends Specification {
 
     def "user service must not allow lastName above 30 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 31
 
         when:
-        def createdUser = User.create(username, firstName, lastName)
+        def createdUser = userService.createUser(username, firstName, lastName)
 
         then:
         thrown(IllegalArgumentException)
@@ -120,12 +128,13 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow lastName with exactly 3 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 3
 
         when:
-        def createdUser = User.create(username, firstName, lastName)
+        def createdUser = userService.createUser(username, firstName, lastName)
 
         then:
         noExceptionThrown()
@@ -133,12 +142,13 @@ class UserServiceSpec extends Specification {
 
     def "user service must allow lastName with exactly 30 characters"() {
         given:
+        def userService = new UserService()
         def username = 'Some Username'
         def firstName = 'Some Firstname'
         def lastName = 'a' * 30
 
         when:
-        def createdUser = User.create(username, firstName, lastName)
+        def createdUser = userService.createUser(username, firstName, lastName)
 
         then:
         noExceptionThrown()
