@@ -11,8 +11,9 @@ final class User {
     private final String username;
     private final String firstName;
     private final String lastName;
+    private final String avatarUrl;
 
-    private User(Long id, String username, String firstName, String lastName) {
+    private User(Long id, String username, String firstName, String lastName, String avatarUrl) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -38,29 +39,33 @@ final class User {
             throw new IllegalArgumentException("Last name must be at least 2 characters");
         }
         if (lastName != null && lastName.length() > 30) {
-            throw new IllegalArgumentException("Last name must be at most 30 characters");
+            throw new IllegalArgumentException("Last name must be at most 30        characters");
+        }
+        if (avatarUrl != null && avatarUrl.isBlank()) {
+            throw new IllegalArgumentException("Avatar URL cannot be blank");
         }
 
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.avatarUrl = avatarUrl;
     }
 
     static User create(String username) {
-        return new User(null, username, null, null);
+        return new User(null, username, null, null, null);
     }
 
     static User create(String username, String firstName) {
-        return new User(null, username, firstName, null);
+        return new User(null, username, firstName, null, null);
     }
 
     static User create(String username, String firstName, String lastName) {
-        return new User(null, username, firstName, lastName);
+        return new User(null, username, firstName, lastName, null);
     }
 
-    static User create(Long id, String username, String firstName, String lastName) {
-        return new User(id, username, firstName, lastName);
+    static User create(String username, String firstName, String lastName, String avatarUrl) {
+        return new User(null, username, firstName, lastName, avatarUrl);
     }
 
 }

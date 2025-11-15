@@ -32,7 +32,7 @@ class UserSpec extends Specification {
         def "Username cannot be above 30 characters"() {
                 given: "username above 30 chars"
                 def maxLength = 30
-                def tooLongUsername = "a" * maxLength
+                def tooLongUsername = "a" * maxLength + 1
 
                 when:
                 User.create(tooLongUsername)
@@ -178,6 +178,32 @@ class UserSpec extends Specification {
 
                 then:
                 def ex = thrown(IllegalArgumentException)
+        }
+
+        def "A user should be able to have null avatarUrl"() {
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def validLastName = "Smith"
+                def blankAvatarUrl = null
+
+                when:
+                def createdUser = User.create(validUsername, validFirstName, validLastName, blankAvatarUrl)
+
+                then:
+                noExceptionThrown()
+        }
+
+        def "A user should be able to have null avatarUrl"() {
+                def validUsername = "Player123"
+                def validFirstName = "Thomas"
+                def validLastName = "Smith"
+                def blankAvatarUrl = ""
+
+                when:
+                User.create(validUsername, validFirstName, validLastName, blankAvatarUrl)
+
+                then:
+                thrown(IllegalArgumentException)
         }
 
 }
