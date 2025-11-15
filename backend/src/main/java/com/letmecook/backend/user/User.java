@@ -1,8 +1,15 @@
 package com.letmecook.backend.user;
 
 import lombok.Getter;
+import lombok.Value;
+import lombok.With;
 
+@Value
+@With
 class User {
+
+    @Getter
+    private Long id;
 
     @Getter
     private final String username;
@@ -13,7 +20,7 @@ class User {
     @Getter
     private final String lastName;
 
-    private User(String username, String firstName, String lastName) {
+    private User(Long id, String username, String firstName, String lastName) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -42,21 +49,26 @@ class User {
             throw new IllegalArgumentException("Last name must be at most 30 characters");
         }
 
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     static User create(String username) {
-        return new User(username, null, null);
+        return new User(null, username, null, null);
     }
 
     static User create(String username, String firstName) {
-        return new User(username, firstName, null);
+        return new User(null, username, firstName, null);
     }
 
     static User create(String username, String firstName, String lastName) {
-        return new User(username, firstName, lastName);
+        return new User(null, username, firstName, lastName);
+    }
+
+    static User create(Long id, String username, String firstName, String lastName) {
+        return new User(id, username, firstName, lastName);
     }
 
 }

@@ -2,20 +2,29 @@ package com.letmecook.backend.user;
 
 class UserService {
 
-    User user;
+    private final IUserRepository userRepository;
+
+    UserService(IUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User createUser(String username, String firstName, String lastName) {
-        this.user = User.create(username, firstName, lastName);
-        return this.user;
+        User savedUser = userRepository.save(User.create(username, firstName, lastName));
+        return savedUser;
     }
 
     public User createUser(String username, String firstName) {
-        this.user = User.create(username, firstName);
-        return this.user;
+        User savedUser = userRepository.save(User.create(username, firstName));
+        return savedUser;
     }
 
     public User createUser(String username) {
-        this.user = User.create(username);
-        return this.user;
+        User savedUser = userRepository.save(User.create(username));
+        return savedUser;
     }
+
+    public User getUserById(Long userId) {
+        return userRepository.getById(userId);
+    }
+
 }
