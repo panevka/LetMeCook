@@ -9,7 +9,7 @@ import lombok.With;
 class User {
 
     @Getter
-    private Long id;
+    private final Long id;
 
     @Getter
     private final String username;
