@@ -5,7 +5,7 @@ import lombok.With;
 
 @Value
 @With
-class User {
+final class User {
 
     private final Long id;
     private final String username;
