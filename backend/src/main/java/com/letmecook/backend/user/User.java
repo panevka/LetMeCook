@@ -27,8 +27,8 @@ class User {
         if (username.isBlank()) {
             throw new IllegalArgumentException("Username cannot be blank");
         }
-        if (username.length() < 3 || username.length() > 20) {
-            throw new IllegalArgumentException("Username must be 3-20 characters");
+        if (username.length() < 3 || username.length() > 30) {
+            throw new IllegalArgumentException("Username must be 3-30 characters");
         }
         if (firstName != null && firstName.isBlank()) {
             throw new IllegalArgumentException("First name cannot be blank");
