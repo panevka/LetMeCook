@@ -1,6 +1,5 @@
 package com.letmecook.backend.user;
 
-import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 
@@ -8,16 +7,9 @@ import lombok.With;
 @With
 class User {
 
-    @Getter
     private final Long id;
-
-    @Getter
     private final String username;
-
-    @Getter
     private final String firstName;
-
-    @Getter
     private final String lastName;
 
     private User(Long id, String username, String firstName, String lastName) {
