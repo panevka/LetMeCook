@@ -1,9 +1,16 @@
 package com.letmecook.backend.user;
 
+import lombok.Getter;
+
 class User {
 
+    @Getter
     private final String username;
+
+    @Getter
     private final String firstName;
+
+    @Getter
     private final String lastName;
 
     private User(String username, String firstName, String lastName) {
@@ -50,18 +57,6 @@ class User {
 
     static User create(String username, String firstName, String lastName) {
         return new User(username, firstName, lastName);
-    }
-
-    String getUsername() {
-        return this.username;
-    }
-
-    String getFirstName() {
-        return this.firstName;
-    }
-
-    String getLastName() {
-        return this.lastName;
     }
 
 }
