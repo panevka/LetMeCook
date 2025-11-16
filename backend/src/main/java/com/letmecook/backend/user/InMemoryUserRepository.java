@@ -3,9 +3,6 @@ package com.letmecook.backend.user;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 class InMemoryUserRepository implements IUserRepository {
     private final Map<Long, User> usersDb = new HashMap<>();
     private Long currentId = 0L;

@@ -1,17 +1,35 @@
 package com.letmecook.backend.user;
 
-import lombok.Value;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.With;
 
-@Value
+@Getter
+@Entity
+@Table(name = "users")
 @With
-final class User {
+public final class User {
 
-    private final Long id;
-    private final String username;
-    private final String firstName;
-    private final String lastName;
-    private final String avatarUrl;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String username;
+
+    private String firstName;
+    private String lastName;
+    private String avatarUrl;
+
+    protected User() {
+
+    }
 
     private User(Long id, String username, String firstName, String lastName, String avatarUrl) {
         if (username == null) {

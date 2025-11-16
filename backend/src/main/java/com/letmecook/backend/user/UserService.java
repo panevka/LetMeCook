@@ -1,6 +1,9 @@
 package com.letmecook.backend.user;
 
-class UserService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
 
     private final IUserRepository userRepository;
 
