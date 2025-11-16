@@ -11,7 +11,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth").authenticated()
+                        .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/loginSuccess", true));
         return http.build();
