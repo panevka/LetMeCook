@@ -1,15 +1,31 @@
 package com.letmecook.backend.project;
 
-import lombok.Data;
-import lombok.Value;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.With;
 
-@Value
+@Getter
+@Setter
+@Entity
+@Table(name = "projects")
 @With
-class Project {
+public class Project {
 
-    private final Long id;
-    private final String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    protected Project() {
+    }
 
     private Project(Long id, String title) {
         if (title == null) {
