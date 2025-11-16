@@ -6,7 +6,7 @@ class ProjectSpec extends Specification {
 
 	def "a project should have a name"() {
 		when:
-		def project = new Project(projectName)
+		def project = Project.create(projectName)
 
 		then:
 		project.getTitle() == expectedName
@@ -23,7 +23,7 @@ class ProjectSpec extends Specification {
 		def title = null
 
 		when:
-		def ex = new Project(title)
+		def ex = Project.create(title)
 
 		then:
 		thrown(IllegalArgumentException)
@@ -34,7 +34,7 @@ class ProjectSpec extends Specification {
 		def title = ""
 
 		when:
-		def ex = new Project(title)
+		def ex = Project.create(title)
 
 		then:
 		thrown(IllegalArgumentException)
@@ -46,7 +46,7 @@ class ProjectSpec extends Specification {
 		def title = "a" * (maxLength + 1)
 		
 		when:
-		new Project(title)
+		Project.create(title)
 		
 		then:
 		thrown(IllegalArgumentException)
@@ -58,7 +58,7 @@ class ProjectSpec extends Specification {
 		def title = "a" * (minLength - 1)
 		
 		when:
-		new Project(title)
+		Project.create(title)
 		
 		then:
 		thrown(IllegalArgumentException)
@@ -70,7 +70,7 @@ class ProjectSpec extends Specification {
 		def title = "a" * maxLength
 		
 		when:
-		new Project(title)
+		Project.create(title)
 		
 		then:
 		noExceptionThrown()
