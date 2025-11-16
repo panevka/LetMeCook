@@ -14,6 +14,12 @@ class Project {
         if (title.isBlank()) {
             throw new IllegalArgumentException();
         }
+        if (title.length() > 50) {
+            throw new IllegalArgumentException();
+        }
+        if (title.length() < 5) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
     }
 
