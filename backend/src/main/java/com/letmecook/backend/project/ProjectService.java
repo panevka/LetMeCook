@@ -2,6 +2,11 @@ package com.letmecook.backend.project;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
+
+@Service
 class ProjectService {
 
     IProjectRepository projectRepository;
