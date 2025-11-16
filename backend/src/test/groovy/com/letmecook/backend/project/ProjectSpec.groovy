@@ -39,4 +39,42 @@ class ProjectSpec extends Specification {
 		then:
 		thrown(IllegalArgumentException)
 	}
+
+	def "a project title should not exceed 50 characters"() {
+		given:
+		def maxLength = 50;
+		def title = "a" * (maxLength + 1)
+		
+		when:
+		new Project(title)
+		
+		then:
+		thrown(IllegalArgumentException)
+	}
+
+	def "a project title should be at least 5 characters long"() {
+		given:
+		def minLength = 5;
+		def title = "a" * (minLength - 1)
+		
+		when:
+		new Project(title)
+		
+		then:
+		thrown(IllegalArgumentException)
+	}
+
+	def "a project title can be exactly 50 characters"() {
+		given:
+		def maxLength = 50;
+		def title = "a" * maxLength
+		
+		when:
+		new Project(title)
+		
+		then:
+		noExceptionThrown()
+	}
+
+
 }
