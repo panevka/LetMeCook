@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 class UserUtils extends Specification {
 
-    public static def getValidUser(Map<String, Object> properties = [:]) {
+    public static def sampleNewUser(Map<String, Object> properties = [:]) {
 
         def SAMPLE_VALID_USER = [username:"ValidUsername", firstName:"John", lastName:"Doe", avatarUrl:"http://example.com/avatar.png"]
 
