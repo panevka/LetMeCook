@@ -11,18 +11,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(String username, String firstName, String lastName) {
-        User savedUser = userRepository.save(User.create(username, firstName, lastName));
-        return savedUser;
-    }
-
-    public User createUser(String username, String firstName) {
-        User savedUser = userRepository.save(User.create(username, firstName));
-        return savedUser;
-    }
-
-    public User createUser(String username) {
-        User savedUser = userRepository.save(User.create(username));
+    public User createUser(User user) {
+        User savedUser = userRepository.save(user);
         return savedUser;
     }
 

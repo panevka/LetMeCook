@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.With;
 
@@ -14,6 +15,7 @@ import lombok.With;
 @Entity
 @Table(name = "users")
 @With
+@Builder
 public final class User {
 
     @Id
@@ -68,18 +70,6 @@ public final class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
-    }
-
-    static User create(String username) {
-        return new User(null, username, null, null, null);
-    }
-
-    static User create(String username, String firstName) {
-        return new User(null, username, firstName, null, null);
-    }
-
-    static User create(String username, String firstName, String lastName) {
-        return new User(null, username, firstName, lastName, null);
     }
 
     static User create(String username, String firstName, String lastName, String avatarUrl) {
