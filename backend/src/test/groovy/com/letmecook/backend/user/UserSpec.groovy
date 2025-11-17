@@ -158,7 +158,7 @@ class UserSpec extends Specification {
                 noExceptionThrown()
         }
 
-        def "A user should be able to have null avatarUrl"() {
+        def "A user should not be able to have empty avatarUrl"() {
                 when:
                 sampleNewUser(avatarUrl: "")
 
