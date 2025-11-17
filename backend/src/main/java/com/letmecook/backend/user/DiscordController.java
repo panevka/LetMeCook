@@ -1,4 +1,4 @@
-package com.letmecook.backend;
+package com.letmecook.backend.user;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -9,9 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DiscordController {
 
+    UserService userService;
+
+    public DiscordController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/loginSuccess")
     public String getUserInfo(@AuthenticationPrincipal OAuth2User oauth2User, Model model) {
-
         System.out.println("Controller called!");
 
         if (oauth2User == null) {
