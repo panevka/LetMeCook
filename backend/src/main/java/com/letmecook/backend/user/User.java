@@ -72,8 +72,4 @@ public final class User {
         this.avatarUrl = avatarUrl;
     }
 
-    static User create(String username, String firstName, String lastName, String avatarUrl) {
-        return new User(null, username, firstName, lastName, avatarUrl);
-    }
-
 }
