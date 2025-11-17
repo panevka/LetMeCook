@@ -29,11 +29,14 @@ public final class User {
     private String lastName;
     private String avatarUrl;
 
+    @Column(unique = true, nullable = false)
+    private String discordId;
+
     protected User() {
 
     }
 
-    private User(Long id, String username, String firstName, String lastName, String avatarUrl) {
+    private User(Long id, String username, String firstName, String lastName, String avatarUrl, String discordId) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -64,12 +67,19 @@ public final class User {
         if (avatarUrl != null && avatarUrl.isBlank()) {
             throw new IllegalArgumentException("Avatar URL cannot be blank");
         }
+        if (avatarUrl != null && avatarUrl.isEmpty()) {
+            throw new IllegalArgumentException("Avatar URL cannot be empty");
+        }
+        if (avatarUrl != null && avatarUrl.length() == 0) {
+            throw new IllegalArgumentException("Avatar URL cannot be empty");
+        }
 
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
+        this.discordId = discordId;
     }
 
 }
