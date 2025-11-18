@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 class OAuth2UserDiscordDto {
-    BigInteger id; // should be treated as unsigned to prevent overflow
+    BigInteger id;
     String username;
     String globalName;
     String avatarId;
