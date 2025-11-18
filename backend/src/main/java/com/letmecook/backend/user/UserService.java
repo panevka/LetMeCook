@@ -1,5 +1,7 @@
 package com.letmecook.backend.user;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,8 +37,9 @@ public class UserService {
         return savedUser;
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.getById(userId);
+    public Optional<User> getUserById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional;
     }
 
 }

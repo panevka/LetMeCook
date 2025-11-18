@@ -2,6 +2,7 @@ package com.letmecook.backend.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 class InMemoryUserRepository implements IUserRepository {
     private final Map<Long, User> usersDb = new HashMap<>();
@@ -16,8 +17,8 @@ class InMemoryUserRepository implements IUserRepository {
     }
 
     @Override
-    public User getById(Long id) {
-        return usersDb.get(id);
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(usersDb.get(id));
     }
 
 }

@@ -1,11 +1,16 @@
 package com.letmecook.backend.project;
 
+import com.letmecook.backend.user.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.With;
@@ -15,6 +20,7 @@ import lombok.With;
 @Entity
 @Table(name = "projects")
 @With
+@Builder
 public class Project {
 
     @Id
@@ -24,10 +30,14 @@ public class Project {
     @Column(nullable = false)
     private String title;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
     protected Project() {
     }
 
-    private Project(Long id, String title) {
+    private Project(Long id, String title, User author) {
         if (title == null) {
             throw new IllegalArgumentException();
         }
@@ -42,13 +52,7 @@ public class Project {
         }
         this.id = id;
         this.title = title;
+        this.author = author;
     }
 
-    static Project create(String projectName) {
-        return new Project(null, projectName);
-    }
-
-    static Project create(Long id, String projectName) {
-        return new Project(id, projectName);
-    }
 }
