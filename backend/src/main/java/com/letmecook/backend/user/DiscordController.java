@@ -1,5 +1,8 @@
 package com.letmecook.backend.user;
 
+import java.math.BigInteger;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -16,17 +19,24 @@ public class DiscordController {
     }
 
     @GetMapping("/loginSuccess")
-    public String getUserInfo(@AuthenticationPrincipal OAuth2User oauth2User, Model model) {
-        System.out.println("Controller called!");
+    public ResponseEntity<String> getUserInfo(@AuthenticationPrincipal OAuth2User oauth2User, Model model) {
 
         if (oauth2User == null) {
-            System.out.println("oauth2User is null!");
+            return ResponseEntity.status(401).body("Unauthorized");
         } else {
-            System.out.println("=== Discord User Info ===");
-            oauth2User.getAttributes().forEach((k, v) -> System.out.println(k + " = " + v));
-            System.out.println("=========================");
+            String id = oauth2User.getAttributes().get("id").toString();
+            String globalName = oauth2User.getAttributes().get("global_name").toString();
+            String avatarId = oauth2User.getAttributes().get("avatar").toString();
+
+            OAuth2UserDiscordDto dto = OAuth2UserDiscordDto.builder()
+                    .id(new BigInteger(id))
+                    .globalName(globalName)
+                    .avatarId(avatarId)
+                    .build();
+
+            userService.createUser(dto);
         }
 
-        return "welcome";
+        return ResponseEntity.ok("Login Successful");
     }
 }

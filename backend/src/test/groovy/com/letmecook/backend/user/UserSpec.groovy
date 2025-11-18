@@ -166,4 +166,28 @@ class UserSpec extends Specification {
                 thrown(IllegalArgumentException)
         }
 
+        def "A user should not be able to have blank discordId"() {
+                when:
+                sampleNewUser(discordId: "  ")
+
+                then:
+                thrown(IllegalArgumentException)
+        }
+
+        def "A user should not be able to have empty discordId"() {
+                when:
+                sampleNewUser(discordId: "")
+
+                then:
+                thrown(IllegalArgumentException)
+        }
+
+        def "A user should not be able to have null discordId"() {
+                when:
+                sampleNewUser(discordId: null)
+
+                then:
+                thrown(IllegalArgumentException)
+        }
+
 }

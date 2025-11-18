@@ -7,7 +7,7 @@ class UserUtils extends Specification {
 
     public static def sampleNewUser(Map<String, Object> properties = [:]) {
 
-        def SAMPLE_VALID_USER = [username:"ValidUsername", firstName:"John", lastName:"Doe", avatarUrl:"http://example.com/avatar.png"]
+        def SAMPLE_VALID_USER = [username:"ValidUsername", firstName:"John", lastName:"Doe", avatarUrl:"http://example.com/avatar.png", discordId: new BigInteger("123")]
 
         properties = SAMPLE_VALID_USER + properties
 
@@ -16,6 +16,7 @@ class UserUtils extends Specification {
                 .firstName(properties.firstName as String)
                 .lastName(properties.lastName as String)
                 .avatarUrl(properties.avatarUrl as String)
+                .discordId(properties.discordId as BigInteger)
                 .build()
     }
 

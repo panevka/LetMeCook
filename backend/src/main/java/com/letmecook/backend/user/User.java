@@ -1,5 +1,7 @@
 package com.letmecook.backend.user;
 
+import java.math.BigInteger;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,13 +32,13 @@ public final class User {
     private String avatarUrl;
 
     @Column(unique = true, nullable = false)
-    private String discordId;
+    private BigInteger discordId;
 
     protected User() {
 
     }
 
-    private User(Long id, String username, String firstName, String lastName, String avatarUrl, String discordId) {
+    private User(Long id, String username, String firstName, String lastName, String avatarUrl, BigInteger discordId) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -72,6 +74,9 @@ public final class User {
         }
         if (avatarUrl != null && avatarUrl.length() == 0) {
             throw new IllegalArgumentException("Avatar URL cannot be empty");
+        }
+        if (discordId == null) {
+            throw new IllegalArgumentException("Discord ID is required");
         }
 
         this.id = id;
