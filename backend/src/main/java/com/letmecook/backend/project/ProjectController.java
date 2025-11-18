@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.letmecook.backend.project.dto.ProjectDto;
+import com.letmecook.backend.project.dto.CreateProjectDto;
 
 @RestController
 @RequestMapping("/api/project")
@@ -18,8 +18,8 @@ class ProjectController {
     }
 
     @PostMapping
-    Project createProject(@RequestBody ProjectDto dto) {
-        return projectService.createProject(dto.getTitle());
+    Project createProject(@RequestBody CreateProjectDto dto) {
+        return projectService.createProject(dto);
     }
 
 }

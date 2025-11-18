@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
+import com.letmecook.backend.project.dto.CreateProjectDto;
 
 @Service
 class ProjectService {
@@ -15,8 +15,8 @@ class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    Project createProject(String projectTitle) {
-        var project = Project.create(projectTitle);
+    Project createProject(CreateProjectDto dto) {
+        var project = Project.create(dto.getTitle());
         var createdProject = projectRepository.save(project);
         return createdProject;
     }
