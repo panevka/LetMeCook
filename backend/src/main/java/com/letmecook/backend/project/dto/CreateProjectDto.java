@@ -13,5 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public final class CreateProjectDto {
     String title;
-    Long user_id;
+    Long userId;
 }

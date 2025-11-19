@@ -24,8 +24,8 @@ class ProjectService {
 
     @Transactional
     Project createProject(CreateProjectDto dto) {
-        User user = userService.getUserById(dto.getUser_id())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + dto.getUser_id()));
+        User user = userService.getUserById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + dto.getUserId()));
 
         var project = Project.builder()
                 .title(dto.getTitle())
