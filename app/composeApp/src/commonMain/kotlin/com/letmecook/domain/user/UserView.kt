@@ -25,8 +25,6 @@ import app.composeapp.generated.resources.Res
 import app.composeapp.generated.resources.allDrawableResources
 import app.composeapp.generated.resources.avatar
 import app.composeapp.generated.resources.compose_multiplatform
-import coil3.compose.AsyncImage
-import coil3.compose.rememberAsyncImagePainter
 import com.letmecook.app.currentUser
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
