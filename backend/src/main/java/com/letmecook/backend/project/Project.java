@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import com.letmecook.backend.user.User;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,6 +38,18 @@ public class Project {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
+
+    @Convert(converter = TechStackListConverter.class)
+    @Column(nullable = false)
+    @Builder.Default
+    private List<TechStack> techStack = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
@@ -47,7 +62,9 @@ public class Project {
     protected Project() {
     }
 
-    private Project(Long id, String title, User author, List<User> participants) {
+    private Project(Long id, String title, String description, PaymentType paymentType, List<TechStack> techStack,
+            User author,
+            List<User> participants) {
         if (title == null) {
             throw new IllegalArgumentException();
         }
@@ -62,8 +79,27 @@ public class Project {
         }
         this.id = id;
         this.title = title;
+        this.description = description;
+        this.paymentType = paymentType;
+        this.techStack = techStack;
         this.author = author;
         this.participants = participants;
+    }
+
+    public enum PaymentType {
+        MONEY,
+        FREE,
+        EQUITY,
+        VOUCHER,
+        SYMBOLIC
+    }
+
+    public enum TechStack {
+        REACT,
+        KOTLIN,
+        JAVA,
+        COBOL,
+        SPRING_BOOT
     }
 
 }

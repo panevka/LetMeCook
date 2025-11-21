@@ -11,7 +11,9 @@ import com.letmecook.backend.user.User;
 import com.letmecook.backend.user.UserService;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 class ProjectService {
 
@@ -31,6 +33,9 @@ class ProjectService {
         var project = Project.builder()
                 .title(dto.getTitle())
                 .author(user)
+                .description(dto.getDescription())
+                .paymentType(dto.getPaymentType())
+                .techStack(dto.getTechStack())
                 .build();
 
         var createdProject = projectRepository.save(project);

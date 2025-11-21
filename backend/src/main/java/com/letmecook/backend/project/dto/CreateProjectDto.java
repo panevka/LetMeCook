@@ -1,17 +1,21 @@
 package com.letmecook.backend.project.dto;
 
-import java.math.BigInteger;
+import java.util.List;
+
+import com.letmecook.backend.project.Project.PaymentType;
+import com.letmecook.backend.project.Project.TechStack;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
 @NoArgsConstructor
-@Setter
 @AllArgsConstructor
+@Data
 public final class CreateProjectDto {
-    String title;
     Long userId;
+    String title;
+    String description;
+    PaymentType paymentType;
+    List<TechStack> techStack;
 }
