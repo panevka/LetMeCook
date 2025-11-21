@@ -107,7 +107,7 @@ internal fun ProjectListView() {
                                     showDetailedProjectView = true
                                 }) {
                                     Text(
-                                        "Join",
+                                        "Show details",
                                         style = MaterialTheme.typography.labelSmall,
                                         textAlign = TextAlign.Center
                                     )
