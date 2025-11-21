@@ -66,27 +66,7 @@ internal fun ProjectListView() {
         }
     }
 
-//    fun initMockData(): List<ProjectEntity> {
-//        val tags = arrayOf("Open-source", "Startup", "Teenagers", "Non-tech tag");
-//
-//        val projects = (1..5).map { project ->
-//            ProjectEntity(
-//                "Project $project",
-//                "Super-duper, hyper, gigachad, sigma description $project",
-//                tags.map { tag -> "$tag $project" }.toTypedArray(),
-//                PaymentType.values().random(), arrayOf(TechnicalStack.values().random())
-//            )
-//        }
-//        return projects;
-//    }
-
-//    val mockProjects = initMockData();
-//    if(projects.isEmpty()){
-//        projects.addAll(mockProjects)
-//    }
-
     var showDetailedProjectView by remember { mutableStateOf(false) }
-//    var clickedProject: ProjectEntity? by remember { mutableStateOf(null) }
     var clickedProject: ProjectDto? by remember { mutableStateOf(null) }
 
     Column(
@@ -121,32 +101,6 @@ internal fun ProjectListView() {
                         ) {
                             Text(project.id.toString())
                             Text(project.title)
-//                            Text(
-//                                project.name,
-//                                style = MaterialTheme.typography.titleLarge,
-//                                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 5.dp),
-//                            )
-//                            Text("Technical stack: ${project.technicalStack.joinToString(", ")} ")
-//                            Text("Payment: ${project.paymentType} ")
-
-//                            FlowRow(
-//                                modifier = Modifier.wrapContentSize(),
-//                                horizontalArrangement = Arrangement.spacedBy(10.dp),
-//                                verticalArrangement = Arrangement.spacedBy(5.dp)
-//                            ) {
-//                                project.tags.map { tag ->
-//
-//                                    Text(
-//                                        text = tag,
-//                                        color = Color.White,
-//                                        modifier = Modifier.clip(
-//                                            RoundedCornerShape(percent = 50)
-//                                        ).background(Color.Blue).padding(5.dp),
-//                                        style = MaterialTheme.typography.labelSmall
-//                                    )
-//
-//                                }
-//                            }
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                 Button(onClick = {
                                     clickedProject = project
