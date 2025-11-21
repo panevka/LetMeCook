@@ -101,6 +101,14 @@ internal fun ProjectListView() {
                         ) {
                             Text(project.id.toString())
                             Text(project.title)
+                            Text(
+                                project.title,
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 5.dp),
+                            )
+                            Text("Technical stack: ${project.tech_stack.joinToString(", ")} ")
+                            Text("Payment: ${project.payment_type} ")
+
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                 Button(onClick = {
                                     clickedProject = project
