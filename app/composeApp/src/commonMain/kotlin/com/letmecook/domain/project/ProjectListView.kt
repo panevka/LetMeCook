@@ -100,7 +100,6 @@ internal fun ProjectListView() {
                             modifier = Modifier.padding(15.dp)
                         ) {
                             Text(project.id.toString())
-                            Text(project.title)
                             Text(
                                 project.title,
                                 style = MaterialTheme.typography.titleLarge,
