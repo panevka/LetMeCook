@@ -10,20 +10,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-internal fun ProjectDetailedView (project: ProjectEntity) {
+internal fun ProjectDetailedView (project: ProjectDto) {
 
     MaterialTheme {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(project.name, style = MaterialTheme.typography.titleLarge)
-            Text(project.description, style = MaterialTheme.typography.titleLarge)
-            Text(project.technicalStack.joinToString(", "), style = MaterialTheme.typography.titleLarge)
-            Text(project.paymentType.toString(), style = MaterialTheme.typography.titleLarge)
-            project.tags.map {
-                tag ->
-                Text(tag, style = MaterialTheme.typography.titleLarge)
-            }
+            Text(project.title, style = MaterialTheme.typography.titleLarge)
         }
     }
 

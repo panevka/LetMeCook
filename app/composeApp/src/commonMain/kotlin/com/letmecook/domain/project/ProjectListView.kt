@@ -99,7 +99,7 @@ internal fun ProjectListView() {
 
         clickedProject.let { project ->
             if (showDetailedProjectView && project != null) {
-//                ProjectDetailedView(project)
+                ProjectDetailedView(project)
             }
         }
         LazyColumn(
