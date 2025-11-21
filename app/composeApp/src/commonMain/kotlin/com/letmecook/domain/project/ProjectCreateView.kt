@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,12 +34,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.letmecook.app.PostList
+import com.letmecook.app.client
+import com.letmecook.app.currentUserId
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 internal fun ProjectCreateView(navController: NavController) {
+
+    val scope = rememberCoroutineScope()
 
     var expandedDropdown by remember { mutableStateOf(false) }
 
@@ -155,6 +161,19 @@ internal fun ProjectCreateView(navController: NavController) {
                         technicalStack = newProjectStack.toList().toTypedArray()
                     )
                     projects?.add(newProjectEntry)
+                    scope.launch {
+
+                        try {
+                            val success = createProject(client, newProjectTitle, currentUserId)
+                            if (success) {
+                                println("Success")
+                            }
+                        } catch (e: Exception) {
+                            println("Join failed")
+                            e.printStackTrace()
+                        }
+
+                    }
                     navController.navigate(PostList)
                 }) {
                     Text("Save post")

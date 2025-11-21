@@ -20,6 +20,10 @@ class Projects {
 
     @Resource("/join")
     class Join(val parent: Projects = Projects())
+
+    @Resource("")
+    class Create(val parent: Projects = Projects())
+
 }
 
 @Serializable
@@ -34,6 +38,11 @@ data class JoinProjectRequest(
     val user_id: Int
 )
 
+@Serializable
+data class CreateProjectRequest(
+    val user_id: Int,
+    val title: String
+)
 
 suspend fun joinProject(
     client: HttpClient,
@@ -43,6 +52,18 @@ suspend fun joinProject(
     val response: HttpResponse = client.post(Projects.Join()) {
         contentType(ContentType.Application.Json)
         setBody(JoinProjectRequest(projectId, userId))
+    }
+    return response.status == HttpStatusCode.OK
+}
+
+suspend fun createProject(
+    client: HttpClient,
+    title: String,
+    userId: Int
+): Boolean {
+    val response: HttpResponse = client.post(Projects.Create()) {
+        contentType(ContentType.Application.Json)
+        setBody(CreateProjectRequest(userId, title))
     }
     return response.status == HttpStatusCode.OK
 }
