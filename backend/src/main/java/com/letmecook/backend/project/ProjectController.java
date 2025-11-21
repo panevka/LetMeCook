@@ -36,7 +36,7 @@ class ProjectController {
             var dto = new GetProjectsResponseDto();
 
             dto.setTitle(project.getTitle());
-            dto.setId(project.getAuthor().getId());
+            dto.setId(project.getId());
             dto.setDescription(project.getDescription());
             dto.setPaymentType(project.getPaymentType());
             dto.setTechStack(project.getTechStack());
