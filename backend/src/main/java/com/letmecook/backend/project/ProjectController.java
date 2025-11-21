@@ -37,6 +37,9 @@ class ProjectController {
 
             dto.setTitle(project.getTitle());
             dto.setId(project.getAuthor().getId());
+            dto.setDescription(project.getDescription());
+            dto.setPaymentType(project.getPaymentType());
+            dto.setTechStack(project.getTechStack());
             dto.setAuthorId(project.getAuthor().getId());
 
             return dto;

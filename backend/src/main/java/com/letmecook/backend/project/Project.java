@@ -88,18 +88,21 @@ public class Project {
 
     public enum PaymentType {
         MONEY,
-        FREE,
+        GRATITUDE,
         EQUITY,
+        SYMBOLIC,
         VOUCHER,
-        SYMBOLIC
     }
 
     public enum TechStack {
         REACT,
+        SPRING,
         KOTLIN,
-        JAVA,
-        COBOL,
-        SPRING_BOOT
+        HASKELL,
+        JULIA,
+        ADA,
+        SCALA,
+        OCAML,
     }
 
 }

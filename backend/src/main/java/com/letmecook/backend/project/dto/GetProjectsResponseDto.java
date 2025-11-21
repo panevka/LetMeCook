@@ -1,14 +1,20 @@
 package com.letmecook.backend.project.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
-@Getter
-@Setter
+import com.letmecook.backend.project.Project.PaymentType;
+import com.letmecook.backend.project.Project.TechStack;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @NoArgsConstructor
 public final class GetProjectsResponseDto {
     Long id;
     String title;
+    String description;
+    List<TechStack> techStack;
+    PaymentType paymentType;
     Long authorId;
 }
