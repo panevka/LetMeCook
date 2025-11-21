@@ -41,8 +41,12 @@ data class JoinProjectRequest(
 @Serializable
 data class CreateProjectRequest(
     val user_id: Int,
-    val title: String
+    val title: String,
+    val description: String,
+    val payment_type: PaymentType,
+    val tech_stack: List<TechnicalStack>,
 )
+
 
 suspend fun joinProject(
     client: HttpClient,
