@@ -3,6 +3,7 @@ package com.letmecook.backend.project;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 class InMemoryProjectRepository implements IProjectRepository {
     private Map<Long, Project> projects = new HashMap<>();
@@ -23,8 +24,12 @@ class InMemoryProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public Optional<Project> findById(Long projectId) {
+        return Optional.ofNullable(projects.get(projectId));
+    }
+
+    @Override
     public Project getById(Long projectId) {
         return projects.get(projectId);
     }
-
 }

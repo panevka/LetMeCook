@@ -1,6 +1,10 @@
 package com.letmecook.backend.user;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.letmecook.backend.project.Project;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
@@ -8,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,11 +39,16 @@ public final class User {
     @Column(unique = true, nullable = false)
     private BigInteger discordId;
 
+    @ManyToMany(mappedBy = "participants")
+    @Builder.Default
+    private List<Project> projects = new ArrayList<>();
+
     protected User() {
 
     }
 
-    private User(Long id, String username, String firstName, String lastName, String avatarUrl, BigInteger discordId) {
+    private User(Long id, String username, String firstName, String lastName, String avatarUrl, BigInteger discordId,
+            List<Project> projects) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -85,6 +95,7 @@ public final class User {
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
         this.discordId = discordId;
+        this.projects = projects;
     }
 
 }
