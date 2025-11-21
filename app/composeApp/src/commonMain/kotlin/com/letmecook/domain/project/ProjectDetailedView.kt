@@ -28,6 +28,10 @@ internal fun ProjectDetailedView (project: ProjectDto) {
             modifier = Modifier.fillMaxSize()
         ) {
             Text(project.title, style = MaterialTheme.typography.titleLarge)
+            Text(project.description, style = MaterialTheme.typography.titleLarge)
+            Text(project.tech_stack.joinToString(", "), style = MaterialTheme.typography.titleLarge)
+            Text(project.payment_type.toString(), style = MaterialTheme.typography.titleLarge)
+
             Button(onClick = {
                 println("aha")
                 scope.launch {
