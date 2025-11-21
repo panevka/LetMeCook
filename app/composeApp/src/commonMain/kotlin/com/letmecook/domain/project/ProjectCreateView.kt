@@ -49,7 +49,7 @@ internal fun ProjectCreateView(navController: NavController) {
     var expandedDropdown by remember { mutableStateOf(false) }
 
     var newProjectTitle by remember { mutableStateOf("") }
-    var newProjectPayment: PaymentType? by remember { mutableStateOf(null) }
+    var newProjectPayment: PaymentType by remember { mutableStateOf(PaymentType.GRATITUDE) }
     var newProjectDescription by remember { mutableStateOf("") }
     var newProjectStack = remember { mutableStateSetOf<TechnicalStack>() }
     val tags = remember { mutableListOf<String>() }
@@ -164,12 +164,12 @@ internal fun ProjectCreateView(navController: NavController) {
                     scope.launch {
 
                         try {
-                            val success = createProject(client, newProjectTitle, currentUserId)
+                            val success = createProject(client, newProjectTitle, newProjectDescription, newProjectPayment, newProjectStack.toList(), currentUserId)
                             if (success) {
                                 println("Success")
                             }
                         } catch (e: Exception) {
-                            println("Join failed")
+                            println("Creation failed")
                             e.printStackTrace()
                         }
 

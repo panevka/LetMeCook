@@ -29,7 +29,10 @@ class Projects {
 @Serializable
 data class ProjectDto(
     val id: Int,
-    val title: String
+    val title: String,
+    val description: String,
+    val payment_type: PaymentType,
+    val tech_stack: List<TechnicalStack>,
 )
 
 @Serializable
@@ -44,7 +47,7 @@ data class CreateProjectRequest(
     val title: String,
     val description: String,
     val payment_type: PaymentType,
-    val tech_stack: List<TechnicalStack>,
+    val tech_stack: List<TechnicalStack>
 )
 
 
@@ -63,11 +66,14 @@ suspend fun joinProject(
 suspend fun createProject(
     client: HttpClient,
     title: String,
+    description: String,
+    paymentType: PaymentType,
+    techStack: List<TechnicalStack>,
     userId: Int
 ): Boolean {
     val response: HttpResponse = client.post(Projects.Create()) {
         contentType(ContentType.Application.Json)
-        setBody(CreateProjectRequest(userId, title))
+        setBody(CreateProjectRequest(userId, title, description ,paymentType, techStack))
     }
     return response.status == HttpStatusCode.OK
 }
