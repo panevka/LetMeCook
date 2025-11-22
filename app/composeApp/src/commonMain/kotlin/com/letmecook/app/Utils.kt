@@ -45,9 +45,9 @@ fun MinimalGlowBackground(
 fun TagChip(
     text: String,
     modifier: Modifier = Modifier,
-    background: Color = Color(0xFF1C2233),
-    contentColor: Color = Color(0xFFCDD6F4),
-    borderColor: Color = Color(0xFF2A3142)
+    background: Color = Color("5b5fff1a"),
+    contentColor: Color = Color("8B8FFF"),
+    borderColor: Color = Color("5b5fff33"),
 ) {
     Box(
         modifier = modifier
