@@ -41,6 +41,7 @@ class ProjectController {
             dto.setPaymentType(project.getPaymentType());
             dto.setTechStack(project.getTechStack());
             dto.setAuthorId(project.getAuthor().getId());
+            dto.setCreatedAt(project.getCreatedAt());
 
             return dto;
         }).toList();

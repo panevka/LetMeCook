@@ -1,5 +1,6 @@
 package com.letmecook.backend.project.dto;
 
+import java.time.Instant;
 import java.util.List;
 
 import com.letmecook.backend.project.Project.PaymentType;
@@ -17,4 +18,5 @@ public final class GetProjectsResponseDto {
     List<TechStack> techStack;
     PaymentType paymentType;
     Long authorId;
+    Instant createdAt;
 }
