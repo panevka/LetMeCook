@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package com.letmecook.app
 
 import androidx.compose.foundation.background
@@ -16,6 +18,12 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
+import kotlin.math.absoluteValue
+import kotlin.math.roundToLong
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Composable
 fun MinimalGlowBackground(
@@ -69,3 +77,33 @@ fun TagChip(
         )
     }
 }
+fun timeAgoVague(timestamp: Instant, now: Instant = Clock.System.now()): String {
+    val seconds = (now - timestamp).inWholeSeconds
+    val absSeconds = abs(seconds)
+
+    return when {
+        absSeconds < 60 -> "1 minute ago"
+        absSeconds < 3600 -> {
+            val minutes = (absSeconds / 60.0).roundToLong()
+            "$minutes minute${if (minutes > 1) "s" else ""} ago"
+        }
+        absSeconds < 86400 -> {
+            val hours = (absSeconds / 3600.0).roundToLong()
+            "$hours hour${if (hours > 1) "s" else ""} ago"
+        }
+        absSeconds < 604800 -> {
+            val days = (absSeconds / 86400.0).roundToLong()
+            "$days day${if (days > 1) "s" else ""} ago"
+        }
+        absSeconds < 2419200 -> {
+            val weeks = (absSeconds / 604800.0).roundToLong()
+            "$weeks week${if (weeks > 1) "s" else ""} ago"
+        }
+        else -> {
+            // fallback: show UTC date only
+            val s = timestamp.toString()
+            s.substring(0, 10)
+        }
+    }
+}
+
