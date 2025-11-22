@@ -1,6 +1,10 @@
 package com.letmecook.backend.project;
 
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 import java.util.ArrayList;
 
 import com.letmecook.backend.user.User;
@@ -59,12 +63,16 @@ public class Project {
     @Builder.Default
     private List<User> participants = new ArrayList<>();
 
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
     protected Project() {
     }
 
     private Project(Long id, String title, String description, PaymentType paymentType, List<TechStack> techStack,
             User author,
-            List<User> participants) {
+            List<User> participants, Instant createdAt) {
         if (title == null) {
             throw new IllegalArgumentException();
         }
@@ -84,6 +92,7 @@ public class Project {
         this.techStack = techStack;
         this.author = author;
         this.participants = participants;
+        this.createdAt = createdAt;
     }
 
     public enum PaymentType {
