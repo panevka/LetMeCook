@@ -22,4 +22,6 @@ object AppColors {
     val PrimaryFontColor = Color("#8D909F")
     val SecondaryFontColor = Color("#FFFFFF")
     val Pink = Color("#E858A5")
+    val Gray = Color("#0A0E27")
+    val LightGray = Color("#1E2139")
 }
