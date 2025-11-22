@@ -87,6 +87,12 @@ internal fun ProjectListView() {
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
 
+        clickedProject.let { project ->
+            if (showDetailedProjectView && project != null) {
+                ProjectDetailedView(project)
+            }
+        }
+
         Text(
             "Hot projects",
             style = MaterialTheme.typography.titleLarge,
@@ -94,11 +100,6 @@ internal fun ProjectListView() {
             color = AppColors.SecondaryFontColor
         )
 
-        clickedProject.let { project ->
-            if (showDetailedProjectView && project != null) {
-                ProjectDetailedView(project)
-            }
-        }
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
