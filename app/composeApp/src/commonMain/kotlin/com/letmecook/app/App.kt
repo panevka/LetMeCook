@@ -58,6 +58,8 @@ object CreatePost
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
 
+var currentUserId = 1;
+
 var userAuthorized: MutableState<Boolean>? = null;
 @Composable
 fun App() {
