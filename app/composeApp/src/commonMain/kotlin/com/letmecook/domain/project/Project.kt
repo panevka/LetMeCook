@@ -12,6 +12,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.resources.Resource
 import kotlinx.serialization.Serializable
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Resource("/project")
 class Projects {
@@ -33,6 +35,7 @@ data class ProjectDto(
     val description: String,
     val payment_type: PaymentType,
     val tech_stack: List<TechnicalStack>,
+    val created_at: String,
 )
 
 @Serializable

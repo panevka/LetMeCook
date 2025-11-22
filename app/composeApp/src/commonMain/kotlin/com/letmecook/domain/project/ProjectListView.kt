@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,14 +45,17 @@ import com.letmecook.app.AppColors
 import com.letmecook.app.MinimalGlowBackground
 import com.letmecook.app.TagChip
 import com.letmecook.app.client
+import com.letmecook.app.timeAgoVague
 import io.ktor.client.call.body
 import io.ktor.client.plugins.resources.get
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 var projects = mutableStateListOf<ProjectEntity>();
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Preview
 @Composable
 internal fun ProjectListView() {
@@ -148,9 +152,14 @@ internal fun ProjectListView() {
 
                             }
 
-                            Text("Payment: ${project.payment_type}", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            HorizontalDivider(thickness = 0.5.dp, modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically ) {
+
+//                                Text("Payment: ${project.payment_type}", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
+
+                                Text("Created: ${timeAgoVague( Instant.parse(project.created_at))}", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
+
                                 Button(onClick = {
                                     clickedProject = project
                                     showDetailedProjectView = true
@@ -164,9 +173,9 @@ internal fun ProjectListView() {
                                     )
                                 }
                             }
+                            }
                         }
 
-                    }
 
                 }
             }
