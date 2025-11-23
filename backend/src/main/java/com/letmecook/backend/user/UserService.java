@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.letmecook.backend.user.dto.GetUserDto;
+
 @Service
 public class UserService {
 
@@ -39,7 +41,23 @@ public class UserService {
 
     public Optional<User> getUserById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
+
         return userOptional;
+    }
+
+    public GetUserDto getUserProfile(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        GetUserDto dto = GetUserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .avatarUrl(user.getAvatarUrl())
+                .build();
+
+        return dto;
     }
 
 }
