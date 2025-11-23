@@ -7,11 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 @Data
-public class GetUserDto {
-    private Long id;
-    private String username;
+public class PatchUserDto {
     private String firstName;
     private String lastName;
-    private String avatarUrl;
     private String bio;
 }

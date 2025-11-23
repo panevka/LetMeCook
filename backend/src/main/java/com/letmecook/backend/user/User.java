@@ -16,8 +16,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.With;
 
+@Setter
 @Getter
 @Entity
 @Table(name = "users")
@@ -43,12 +45,14 @@ public final class User {
     @Builder.Default
     private List<Project> projects = new ArrayList<>();
 
+    private String bio;
+
     protected User() {
 
     }
 
     private User(Long id, String username, String firstName, String lastName, String avatarUrl, BigInteger discordId,
-            List<Project> projects) {
+            List<Project> projects, String bio) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -96,6 +100,7 @@ public final class User {
         this.avatarUrl = avatarUrl;
         this.discordId = discordId;
         this.projects = projects;
+        this.bio = bio;
     }
 
 }

@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.letmecook.backend.common.PatchUtil;
 import com.letmecook.backend.user.dto.GetUserDto;
+import com.letmecook.backend.user.dto.PatchUserDto;
 
 @Service
 public class UserService {
@@ -55,9 +57,28 @@ public class UserService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .avatarUrl(user.getAvatarUrl())
+                .bio(user.getBio())
                 .build();
 
         return dto;
+    }
+
+    public GetUserDto updateUserProfile(Long userId, PatchUserDto dto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        PatchUtil.applyPatch(dto, user);
+
+        userRepository.save(user);
+
+        return GetUserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .avatarUrl(user.getAvatarUrl())
+                .bio(user.getBio())
+                .build();
     }
 
 }
