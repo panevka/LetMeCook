@@ -62,10 +62,10 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.coroutines.core)
-//            implementation("io.ktor:ktor-client-darwin:3.3.0")
             implementation(libs.ktor.client.resources)
             implementation(libs.ktor.client.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
+            implementation("media.kamel:kamel-image-default:1.0.8")
 
 
         }
