@@ -14,6 +14,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth").authenticated()
+                        .requestMatchers("/test").authenticated()
                         .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/loginSuccess", true));
