@@ -1,26 +1,37 @@
 package com.letmecook.domain.user
 
-import com.letmecook.domain.project.PaymentType
-import com.letmecook.domain.project.TechnicalStack
+import com.letmecook.domain.project.JoinProjectRequest
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpRetryEventData
+import io.ktor.client.plugins.resources.get
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
+import io.ktor.resources.Resource
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class ProjectDto(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val payment_type: PaymentType,
-    val tech_stack: List<TechnicalStack>,
-    val created_at: String,
-    val author_username: String,
-    val author_id: Long,
-)
-
-data class GetUserDto {
-    private val id: Long? = null
-    private val username: String? = null
-    private val firstName: String? = null
-    private val lastName: String? = null
-    private val avatarUrl: String? = null
+@Resource("/user")
+class Users {
+    @Resource("/{id}")
+    class GetById(val parent: Users = Users(), val id: Long)
 }
+suspend fun getUser(client: HttpClient, userId: Long): HttpResponse {
+
+    val response: HttpResponse = client.get(Users.GetById(id=userId)) {
+        contentType(ContentType.Application.Json)
+    }
+    return response;
+}
+
+@Serializable
+data class UserDto (
+    val id: Long,
+    val username: String,
+    val first_name: String?,
+    val last_name: String?,
+    val bio: String?,
+    val avatar_url: String
+)
 
