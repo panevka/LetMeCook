@@ -81,7 +81,6 @@ internal fun UserView () {
         return
     }
 
-    var username by remember { mutableStateOf(mockUser.username)}
     var firstName by remember { mutableStateOf(mockUser.first_name ?:"")}
     var lastName by remember { mutableStateOf(mockUser.last_name ?: "")}
     var bio by remember { mutableStateOf(mockUser.bio ?: "")}
@@ -112,6 +111,8 @@ internal fun UserView () {
 //                    .clip(RoundedCornerShape(8.dp))
 //            )
             Text(mockUser.username, style = MaterialTheme.typography.displayMedium, color = Color.White)
+
+            Text("${mockUser.first_name} ${mockUser.last_name}" ?: "", style = MaterialTheme.typography.displaySmall, color = Color.White)
 
             Text("About", style = MaterialTheme.typography.headlineLarge, color = Color.White, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
 
