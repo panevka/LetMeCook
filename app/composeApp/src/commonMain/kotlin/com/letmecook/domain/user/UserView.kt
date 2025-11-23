@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -49,6 +51,9 @@ internal fun UserView () {
         var showPopup by remember { mutableStateOf(false) }
 
     var user by remember { mutableStateOf<UserDto?>(null)}
+
+    val scope = rememberCoroutineScope()
+
 
         LaunchedEffect(true){
             try {
@@ -68,7 +73,7 @@ internal fun UserView () {
 //            id = 1
 //        ))}
 
-    val mockUser = user;
+    var mockUser = user;
     if(mockUser == null){
        Text(
            "Could not fetch"
@@ -76,6 +81,10 @@ internal fun UserView () {
         return
     }
 
+    var username by remember { mutableStateOf(mockUser.username)}
+    var firstName by remember { mutableStateOf(mockUser.first_name ?:"")}
+    var lastName by remember { mutableStateOf(mockUser.last_name ?: "")}
+    var bio by remember { mutableStateOf(mockUser.bio ?: "")}
 
 
         val fullName = "${mockUser.first_name} ${mockUser.last_name}"
@@ -124,37 +133,37 @@ internal fun UserView () {
         }
 
 
-//    if (showPopup) {
-//        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
-//            Column(verticalArrangement = Arrangement.Top){
+    if (showPopup) {
+        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
+            Column(verticalArrangement = Arrangement.Top){
 //            TextField(
-//                value = mockUser.username,
+//                value = username,
 //                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(username = newValue)
+//                    username = newValue
 //                } ,
-//                label = {Text("nickname")}
+//                label = {Text("Username")}
 //            )
-//            TextField(
-//                value = mockUser.first_name,
-//                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(firstName = newValue)
-//                } ,
-//                label = {Text("firstName")}
-//            )
-//            TextField(
-//                value = mockUser.lastName,
-//                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(lastName = newValue)
-//                } ,
-//                label = {Text("lastName")}
-//            )
-//            TextField(
-//                value = mockUser.bio,
-//                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(bio = newValue)
-//                } ,
-//                label = {Text("bio")}
-//            )
+            TextField(
+                value = firstName,
+                onValueChange = { newValue: String ->
+                    firstName = newValue
+                },
+                label = {Text("First name")}
+            )
+            TextField(
+                value = lastName,
+                onValueChange = { newValue: String ->
+                    lastName = newValue
+                } ,
+                label = {Text("lastName")}
+            )
+            TextField(
+                value = bio,
+                onValueChange = { newValue: String ->
+                    bio = newValue
+                } ,
+                label = {Text("Bio")}
+            )
 //            TextField(
 //                value = mockUser.websiteUrl,
 //                onValueChange = { newValue: String ->
@@ -169,7 +178,7 @@ internal fun UserView () {
 //                } ,
 //                label = {Text("avatarUrl")}
 //            )
-//
+
 //                TextField(
 //                    value = mockUser.githubUrl,
 //                    onValueChange = { newValue: String ->
@@ -177,12 +186,25 @@ internal fun UserView () {
 //                    } ,
 //                    label = {Text("Github Account")}
 //                )
-//                Button(onClick = { showPopup = false}){
-//                    Text("Save")
-//                }
-//        }
-//        }
-//    }
+                Button(onClick = {
+                    showPopup = false
+                    val newUserData = PatchUserDto(first_name = firstName, last_name = lastName, bio = bio )
+
+                    scope.launch {
+                    try {
+                        val response: UserDto = updateUser(client, currentUserId.toLong(), newUserData).body()
+                        user = response;
+                    } catch (e: Exception){
+                        println("Error updating user")
+                        println(e.printStackTrace())
+                    }
+                    }
+                }){
+                    Text("Save")
+                }
+        }
+        }
+    }
 
 
 }
