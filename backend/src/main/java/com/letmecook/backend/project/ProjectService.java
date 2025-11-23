@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.letmecook.backend.project.dto.CreateProjectDto;
+import com.letmecook.backend.project.dto.GetProjectsResponseDto;
 import com.letmecook.backend.project.dto.JoinProjectDto;
 import com.letmecook.backend.user.User;
 import com.letmecook.backend.user.UserService;
@@ -56,8 +57,19 @@ class ProjectService {
         user.getProjects().add(project);
     }
 
-    List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    List<GetProjectsResponseDto> getAllProjects() {
+        return projectRepository.findAll().stream()
+                .map(project -> GetProjectsResponseDto.builder()
+                        .id(project.getId())
+                        .title(project.getTitle())
+                        .description(project.getDescription())
+                        .paymentType(project.getPaymentType())
+                        .techStack(project.getTechStack())
+                        .authorUsername(project.getAuthor().getUsername())
+                        .authorId(project.getAuthor().getId())
+                        .createdAt(project.getCreatedAt())
+                        .build())
+                .toList();
     }
 
     Project getProjectById(Long projectId) {

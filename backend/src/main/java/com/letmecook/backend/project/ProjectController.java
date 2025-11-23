@@ -31,20 +31,7 @@ class ProjectController {
     @GetMapping("/all")
     List<GetProjectsResponseDto> getProjects() {
         var projects = projectService.getAllProjects();
-
-        return projects.stream().map(project -> {
-            var dto = new GetProjectsResponseDto();
-
-            dto.setTitle(project.getTitle());
-            dto.setId(project.getId());
-            dto.setDescription(project.getDescription());
-            dto.setPaymentType(project.getPaymentType());
-            dto.setTechStack(project.getTechStack());
-            dto.setAuthorId(project.getAuthor().getId());
-            dto.setCreatedAt(project.getCreatedAt());
-
-            return dto;
-        }).toList();
+        return projects;
     }
 
     @PostMapping("/join")
