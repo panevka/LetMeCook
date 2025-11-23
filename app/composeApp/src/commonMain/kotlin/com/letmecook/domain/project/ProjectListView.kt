@@ -60,8 +60,8 @@ var projects = mutableStateListOf<ProjectEntity>();
 @Composable
 internal fun ProjectListView() {
 
-//    var backendProjects by remember { mutableStateOf<List<ProjectDto>>(emptyList())}
-    var backendProjects = Mocks.getAllProjects()
+    var backendProjects by remember { mutableStateOf<List<ProjectDto>>(emptyList())}
+//    var backendProjects = Mocks.getAllProjects()
     LaunchedEffect(true){
         try {
             val response: List<ProjectDto> = client.get(Projects.All()).body()
@@ -137,7 +137,7 @@ internal fun ProjectListView() {
                                 color = AppColors.SecondaryFontColor
                             )
 
-                                    Text("by Some Author", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                                    Text("by ${project.author_username}", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
                                 }
 
                             }

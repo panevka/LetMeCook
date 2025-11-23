@@ -36,6 +36,8 @@ data class ProjectDto(
     val payment_type: PaymentType,
     val tech_stack: List<TechnicalStack>,
     val created_at: String,
+    val author_username: String,
+    val author_id: Long,
 )
 
 @Serializable

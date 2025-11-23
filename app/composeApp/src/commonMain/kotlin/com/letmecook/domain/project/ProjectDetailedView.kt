@@ -77,7 +77,7 @@ internal fun ProjectDetailedView (project: ProjectDto = Mocks.projectList[0]) {
                     color = AppColors.SecondaryFontColor
                 )
 
-                Text("by Some Author", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Text("by ${project.author_username}", color = AppColors.PrimaryFontColor, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
         }
             FlowRow(
