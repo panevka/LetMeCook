@@ -1,5 +1,6 @@
 package com.letmecook.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,20 @@ class MainActivity : ComponentActivity() {
             App()
         }
     }
+    override fun onNewIntent(intent: Intent) {
+        println("on new intent")
+        super.onNewIntent(intent)
+        intent.data?.let { uri ->
+            if (uri.scheme == "letmecook" && uri.host == "auth") {
+                val token = uri.getQueryParameter("token")
+                token?.let {
+                    println("token: $token")
+                    MySharedModule.setToken(it)
+                }
+            }
+        }
+    }
+
 }
 
 @Preview
