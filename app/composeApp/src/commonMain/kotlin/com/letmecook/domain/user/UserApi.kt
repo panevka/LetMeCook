@@ -13,7 +13,7 @@ import io.ktor.http.contentType
 import io.ktor.resources.Resource
 import kotlinx.serialization.Serializable
 
-@Resource("/user")
+@Resource("/api/user")
 class Users {
     @Resource("/{id}")
     class GetById(val parent: Users = Users(), val id: Long)
@@ -21,6 +21,14 @@ class Users {
     @Resource("/{id}")
     class Update(val parent: Users = Users(), val id: Long)
 }
+
+@Resource("/api/authorize")
+class Authorize {
+    @Resource("/discord")
+    class discord(val parent: Users = Users())
+}
+
+
 suspend fun getUser(client: HttpClient, userId: Long): HttpResponse {
 
     val response: HttpResponse = client.get(Users.GetById(id=userId)) {

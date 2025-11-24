@@ -61,6 +61,17 @@ var currentUser: Pair<String, String>? = null;
 var currentUserId = 1;
 
 var userAuthorized: MutableState<Boolean>? = null;
+
+object MySharedModule {
+    private var jwtToken: String? = null
+
+    fun setToken(token: String) {
+        jwtToken = token
+    }
+
+    fun getToken(): String? = jwtToken
+}
+
 @Composable
 fun App() {
 
@@ -103,7 +114,7 @@ fun App() {
                         modifier = Modifier.matchParentSize()
                     )
                     NavHost(
-                        navController = navController, startDestination = PostList, modifier = Modifier
+                        navController = navController, startDestination = SignUp, modifier = Modifier
                         .safeContentPadding()
                         .padding(innerPadding)
                             .fillMaxSize()
@@ -111,7 +122,8 @@ fun App() {
                         composable<Profile> { UserView() }
                         composable<PostList> { ProjectListView() }
                         composable<Login> { LoginView(navController) }
-                        composable<SignUp> { SignUpView(navController) }
+//                        composable<SignUp> { SignUpView(navController) }
+                        composable<SignUp> { SignUpView2() }
                         composable<CreatePost> { ProjectCreateView(navController) }
                     }
 

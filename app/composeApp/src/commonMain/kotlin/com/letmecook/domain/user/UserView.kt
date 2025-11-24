@@ -51,11 +51,9 @@ internal fun UserView () {
         var showPopup by remember { mutableStateOf(false) }
 
     var user by remember { mutableStateOf<UserDto?>(null)}
-
     val scope = rememberCoroutineScope()
 
-
-        LaunchedEffect(true){
+    LaunchedEffect(true){
             try {
                 val response: UserDto = getUser(client,currentUserId.toLong()).body()
                 user = response
