@@ -48,6 +48,7 @@ import com.letmecook.app.client
 import com.letmecook.app.timeAgoVague
 import io.ktor.client.call.body
 import io.ktor.client.plugins.resources.get
+import io.ktor.client.statement.bodyAsText
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.ExperimentalTime
@@ -64,8 +65,10 @@ internal fun ProjectListView() {
 //    var backendProjects = Mocks.getAllProjects()
     LaunchedEffect(true){
         try {
-            val response: List<ProjectDto> = client.get(Projects.All()).body()
-            backendProjects = response
+            val response = getAllProjects(client)
+            println("STATUS: ${response.status}")
+            println("BODY: ${response.bodyAsText()}")
+            backendProjects = response.body<List<ProjectDto>>()
         } catch (e: Exception){
             println("Error")
         }

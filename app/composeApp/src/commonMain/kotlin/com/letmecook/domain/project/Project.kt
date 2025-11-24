@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@Resource("/project")
+@Resource("/api/project")
 class Projects {
     @Resource("/all")
     class All(val parent: Projects = Projects())
@@ -81,4 +81,12 @@ suspend fun createProject(
         setBody(CreateProjectRequest(userId, title, description ,paymentType, techStack))
     }
     return response.status == HttpStatusCode.OK
+}
+suspend fun getAllProjects(
+    client: HttpClient,
+): HttpResponse {
+val response: HttpResponse = client.get(Projects.All()) {
+        contentType(ContentType.Application.Json)
+    }
+    return response
 }
