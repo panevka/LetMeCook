@@ -38,3 +38,12 @@ jwt:
   expirationMs: 86400000 # 24 hours in milliseconds
 server:
   port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+        security.web.access.intercept: DEBUG
+        security.oauth2: DEBUG
