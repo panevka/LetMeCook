@@ -66,8 +66,7 @@ kotlin {
             implementation(libs.ktor.client.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
             implementation("media.kamel:kamel-image-default:1.0.8")
-
-
+            implementation(libs.ktor.client.auth)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
