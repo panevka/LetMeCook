@@ -21,4 +21,9 @@ class InMemoryUserRepository implements IUserRepository {
         return Optional.ofNullable(usersDb.get(id));
     }
 
+    @Override
+    public Optional<User> findByDiscordId(Long id) {
+        throw new UnsupportedOperationException("Unimplemented method 'findByDiscordId'");
+    }
+
 }
