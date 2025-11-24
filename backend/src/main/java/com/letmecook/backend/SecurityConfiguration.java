@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                                                                                                 .authenticated()
                                                                                                 .requestMatchers("/oauth2/**", "/loginSuccess",
                                                                                                                                 "/login/**",
-                                                                                                                                "/authorize/**")
+                                                                                                                                "/api/authorize/**")
                                                                                                 .permitAll()
                                                                                                 .requestMatchers("/api/**")
                                                                                                 .authenticated()
@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                                                                 .oauth2Login(oauth2 -> oauth2.successHandler(
                                                                                                 successHandler)
                                                                                                 .authorizationEndpoint(auth -> auth
-                                                                                                                                .baseUri("/authorize")));
+                                                                                                                                .baseUri("/api/authorize")));
 
                                 http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
