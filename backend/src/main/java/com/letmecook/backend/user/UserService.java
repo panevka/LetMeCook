@@ -47,6 +47,12 @@ public class UserService {
         return userOptional;
     }
 
+    public Optional<User> findByDiscordId(Long userDiscordId) {
+        Optional<User> userOptional = userRepository.findByDiscordId(userDiscordId);
+
+        return userOptional;
+    }
+
     public GetUserDto getUserProfile(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));

@@ -1,12 +1,13 @@
 package com.letmecook.backend.user;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.letmecook.backend.JwtUtils;
@@ -14,8 +15,8 @@ import com.letmecook.backend.JwtUtils;
 @Controller
 public class DiscordController {
 
-    UserService userService;
-    JwtUtils jwtUtils;
+    private final UserService userService;
+    private final JwtUtils jwtUtils;
 
     public DiscordController(UserService userService, JwtUtils jwtUtils) {
         this.userService = userService;
@@ -23,18 +24,26 @@ public class DiscordController {
     }
 
     @GetMapping("/loginSuccess")
-    public ResponseEntity<String> getUserInfo(@AuthenticationPrincipal OAuth2User oauth2User, Model model) {
+    public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal OAuth2User oauth2User) {
 
         if (oauth2User == null) {
             return ResponseEntity.status(401).body("Unauthorized");
         }
 
-        String id = oauth2User.getAttributes().get("id").toString();
-        String globalName = oauth2User.getAttributes().get("global_name").toString();
-        String avatarId = oauth2User.getAttributes().get("avatar").toString();
+        Object idObj = oauth2User.getAttributes().get("id");
+        Object globalNameObj = oauth2User.getAttributes().get("global_name");
+        Object avatarObj = oauth2User.getAttributes().get("avatar");
+
+        if (idObj == null || globalNameObj == null) {
+            return ResponseEntity.status(400).body("Missing user attributes");
+        }
+
+        String idStr = idObj.toString();
+        String globalName = globalNameObj.toString();
+        String avatarId = avatarObj != null ? avatarObj.toString() : null;
 
         OAuth2UserDiscordDto dto = OAuth2UserDiscordDto.builder()
-                .id(new BigInteger(id))
+                .id(new BigInteger(idStr))
                 .globalName(globalName)
                 .avatarId(avatarId)
                 .build();
@@ -42,14 +51,20 @@ public class DiscordController {
 
         org.springframework.security.core.userdetails.UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(globalName)
-                .password("")
+                .password("") // no password, oauth user
                 .authorities("ROLE_USER")
                 .build();
 
-        String jwt = jwtUtils
-                .generateJwtToken(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()));
+        org.springframework.security.authentication.UsernamePasswordAuthenticationToken auth = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
 
-        return ResponseEntity.ok(jwt);
+        String jwt = jwtUtils.generateJwtToken(auth);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("token", jwt);
+        body.put("tokenType", "Bearer");
+        body.put("expiresAt", jwtUtils.getExpirationDateFromJwtToken(jwt));
+
+        return ResponseEntity.ok(body);
     }
 }

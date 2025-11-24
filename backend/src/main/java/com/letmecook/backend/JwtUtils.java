@@ -4,24 +4,20 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Base64;
 
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
 public class JwtUtils {
 
-    @Value("${jwt.secret:}") // optional, fallback to empty
+    @Value("${jwt.secret:}") // Expect Base64-encoded secret; if empty we generate one (not ideal for prod)
     private String jwtSecret;
 
-    @Value("${jwt.expirationMs:86400000}") // default 24h
+    @Value("${jwt.expirationMs:86400000}") // 24h default
     private int jwtExpirationMs;
 
     private SecretKey secretKey;
@@ -30,34 +26,49 @@ public class JwtUtils {
     public void init() {
         try {
             if (jwtSecret != null && !jwtSecret.isEmpty()) {
-                // Decode Base64 key from properties
-                byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
-                if (keyBytes.length < 32) { // less than 256 bits
-                    System.err.println("JWT secret too short! Generating a secure random key.");
-                    secretKey = Jwts.SIG.HS256.key().build();
+                // Accept plain text or base64: prefer base64 for binary size
+                // We'll try to decode; if it fails, treat as raw bytes of UTF-8
+                byte[] keyBytes;
+                try {
+                    keyBytes = Decoders.BASE64.decode(jwtSecret);
+                } catch (Exception ex) {
+                    keyBytes = jwtSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                }
+
+                if (keyBytes.length < 32) { // require >= 256 bits for HS256
+                    System.err.println(
+                            "Configured JWT secret is too short (must be >= 256 bits). Falling back to generated key.");
+                    secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
                 } else {
                     secretKey = Keys.hmacShaKeyFor(keyBytes);
                 }
             } else {
-                // No secret provided, generate a strong random key
-                System.out.println("No JWT secret provided. Generating a secure random key.");
-                secretKey = Jwts.SIG.HS256.key().build();
+                System.out.println(
+                        "No JWT secret provided. Generating a secure random key (tokens will NOT survive restart).");
+                secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
             }
         } catch (Exception e) {
             System.err.println("Failed to initialize JWT key: " + e.getMessage());
-            // fallback to safe random key
-            secretKey = Jwts.SIG.HS256.key().build();
+            secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         }
     }
 
     public String generateJwtToken(org.springframework.security.core.Authentication authentication) {
-        org.springframework.security.core.userdetails.UserDetails userPrincipal = (org.springframework.security.core.userdetails.UserDetails) authentication
-                .getPrincipal();
+        Object principal = authentication.getPrincipal();
+        String username;
+        if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+            username = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+        } else {
+            username = String.valueOf(principal);
+        }
+
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -71,8 +82,8 @@ public class JwtUtils {
             return true;
         } catch (JwtException e) {
             System.err.println("Invalid JWT token: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public String getUserNameFromJwtToken(String token) {

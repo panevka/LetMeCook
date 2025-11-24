@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-class OAuth2UserDiscordDto {
+public class OAuth2UserDiscordDto {
     BigInteger id;
     String username;
     String globalName;
