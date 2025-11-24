@@ -40,7 +40,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 		// Check if user exists
 		var existingUserOpt = userService.findByDiscordId(longDiscordId);
 
-		if (!existingUserOpt.isPresent()) {
+		if (existingUserOpt.isEmpty()) {
 			userService.createUser(OAuth2UserDiscordDto.builder()
 					.id(discordId)
 					.globalName(globalName)
@@ -48,7 +48,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 					.build());
 		}
 
-		UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(globalName)
+		UserDetails userDetails = User.withUsername(globalName)
 				.password("")
 				.authorities("ROLE_USER")
 				.build();
@@ -57,12 +57,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 				new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities()));
 
-		response.setContentType("application/json");
-		response.getWriter().write("""
-				{
-				    "token": "%s",
-				    "tokenType": "Bearer"
-				}
-				""".formatted(jwt));
+		String redirectUrl = "letmecook://auth?token=" + jwt;
+		response.sendRedirect(redirectUrl);
 	}
 }
