@@ -13,32 +13,35 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfiguration {
 
-        private final AuthTokenFilter authTokenFilter;
-        private final AuthEntryPointJwt authEntryPointJwt;
-        private final OAuth2LoginSuccessHandler successHandler;
+                private final AuthTokenFilter authTokenFilter;
+                private final AuthEntryPointJwt authEntryPointJwt;
+                private final OAuth2LoginSuccessHandler successHandler;
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http.csrf(csrf -> csrf.disable())
-                                .exceptionHandling(ex -> ex.authenticationEntryPoint(
-                                                authEntryPointJwt))
-                                .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/test")
-                                                .authenticated()
-                                                .requestMatchers("/oauth2/**", "/loginSuccess",
-                                                                "/login/**")
-                                                .permitAll()
-                                                .requestMatchers("/api/**")
-                                                .authenticated()
-                                                .anyRequest()
-                                                .permitAll())
-                                .sessionManagement(sess -> sess
-                                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                                .oauth2Login(oauth2 -> oauth2.successHandler(
-                                                successHandler));
+                @Bean
+                public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                                http.csrf(csrf -> csrf.disable())
+                                                                .exceptionHandling(ex -> ex.authenticationEntryPoint(
+                                                                                                authEntryPointJwt))
+                                                                .authorizeHttpRequests(auth -> auth
+                                                                                                .requestMatchers("/test")
+                                                                                                .authenticated()
+                                                                                                .requestMatchers("/oauth2/**", "/loginSuccess",
+                                                                                                                                "/login/**",
+                                                                                                                                "/authorize/**")
+                                                                                                .permitAll()
+                                                                                                .requestMatchers("/api/**")
+                                                                                                .authenticated()
+                                                                                                .anyRequest()
+                                                                                                .permitAll())
+                                                                .sessionManagement(sess -> sess
+                                                                                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                                                                .oauth2Login(oauth2 -> oauth2.successHandler(
+                                                                                                successHandler)
+                                                                                                .authorizationEndpoint(auth -> auth
+                                                                                                                                .baseUri("/authorize")));
 
-                http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                                http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
-        }
+                                return http.build();
+                }
 }
