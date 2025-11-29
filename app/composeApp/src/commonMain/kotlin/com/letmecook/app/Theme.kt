@@ -24,4 +24,7 @@ object AppColors {
     val Pink = Color("#E858A5")
     val Gray = Color("#0A0E27")
     val LightGray = Color("#1E2139")
+    val Secondary = Color("#552752")
+    val White = Color("#FFFFFF")
+    val Black = Color("#000000")
 }
