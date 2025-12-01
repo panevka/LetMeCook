@@ -19,10 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.letmecook.domain.account.LoginView
-import com.letmecook.domain.account.SignUpView
-import com.letmecook.domain.account.SignUpView
-import com.letmecook.domain.account.SignUpView2
 import com.letmecook.domain.project.ProjectCreateView
 import com.letmecook.domain.project.ProjectDto
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -46,15 +42,12 @@ object Profile
 @Serializable
 object PostList
 
-@Serializable
-object Login
-
-@Serializable
-object SignUp
 
 @Serializable
 object CreatePost
 
+@Serializable
+object Welcome
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
 
@@ -114,16 +107,14 @@ fun App() {
                         modifier = Modifier.matchParentSize()
                     )
                     NavHost(
-                        navController = navController, startDestination = SignUp, modifier = Modifier
+                        navController = navController, startDestination = Welcome, modifier = Modifier
                         .safeContentPadding()
                         .padding(innerPadding)
                             .fillMaxSize()
                     ) {
                         composable<Profile> { UserView() }
+                        composable<Welcome> { WelcomeScreen() }
                         composable<PostList> { ProjectListView() }
-                        composable<Login> { LoginView(navController) }
-//                        composable<SignUp> { SignUpView(navController) }
-                        composable<SignUp> { SignUpView2() }
                         composable<CreatePost> { ProjectCreateView(navController) }
                     }
 
