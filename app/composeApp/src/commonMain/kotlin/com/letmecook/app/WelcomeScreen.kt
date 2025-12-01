@@ -68,7 +68,6 @@ fun WelcomeScreen (navController: NavController) {
             Button(
                 onClick = {
                     uriHandler.openUri(API_URL + "/api/authorize/discord")
-                    navController.navigate(PostList)
                 },
                 content = { Text("Continue with Discord", color = AppColors.Black) },
                 colors = ButtonDefaults.buttonColors(containerColor = AppColors.White),

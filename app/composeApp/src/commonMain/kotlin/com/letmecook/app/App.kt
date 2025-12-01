@@ -73,6 +73,14 @@ fun App() {
     val userAuthorized by remember {
         derivedStateOf { !MySharedModule.getToken().isNullOrBlank() }
     }
+    LaunchedEffect(userAuthorized) {
+        if (userAuthorized) {
+            navController.navigate(PostList) {
+                popUpTo(Welcome) { inclusive = true }
+            }
+        }
+    }
+
     MaterialTheme {
         Box(Modifier.fillMaxSize()) {
             MinimalGlowBackground(
