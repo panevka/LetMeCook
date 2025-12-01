@@ -28,11 +28,13 @@ import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.letmecook.app.MinimalGlowBackground
 import com.letmecook.app.PostList
 import com.letmecook.app.client
 import com.letmecook.app.currentUserId
@@ -67,8 +69,8 @@ internal fun ProjectCreateView(navController: NavController) {
             }
         }
     }
-        Box(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.primary)) {
-            Column() {
+
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 TextField(
                     value = newProjectTitle, label = { Text("Project title") },
                     onValueChange = { newProjectTitle = it })
@@ -179,5 +181,4 @@ internal fun ProjectCreateView(navController: NavController) {
                     Text("Save post")
                 }
             }
-        }
     }
