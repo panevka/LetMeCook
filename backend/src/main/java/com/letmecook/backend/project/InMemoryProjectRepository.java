@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.jpa.domain.Specification;
+
 class InMemoryProjectRepository implements IProjectRepository {
     private Map<Long, Project> projects = new HashMap<>();
     private Long idCounter = 1L;
@@ -31,5 +33,11 @@ class InMemoryProjectRepository implements IProjectRepository {
     @Override
     public Project getById(Long projectId) {
         return projects.get(projectId);
+    }
+
+    @Override
+    public List<Project> findAll(Specification<Project> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 }
