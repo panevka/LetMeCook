@@ -34,11 +34,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun WelcomeScreen () {
+fun WelcomeScreen (navController: NavController) {
 
     val uriHandler = LocalUriHandler.current
 
@@ -67,6 +68,7 @@ fun WelcomeScreen () {
             Button(
                 onClick = {
                     uriHandler.openUri(API_URL + "/api/authorize/discord")
+                    navController.navigate(PostList)
                 },
                 content = { Text("Continue with Discord", color = AppColors.Black) },
                 colors = ButtonDefaults.buttonColors(containerColor = AppColors.White),

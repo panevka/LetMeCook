@@ -53,24 +53,26 @@ var currentUser: Pair<String, String>? = null;
 
 var currentUserId = 1;
 
-var userAuthorized: MutableState<Boolean>? = null;
+//var userAuthorized: MutableState<Boolean>? = null;
 
 object MySharedModule {
-    private var jwtToken: String? = null
+    private val _jwtToken = mutableStateOf<String?>(null)
+    val jwtToken: State<String?> get() = _jwtToken
 
     fun setToken(token: String) {
-        jwtToken = token
+        _jwtToken.value = token
     }
 
-    fun getToken(): String? = jwtToken
+    fun getToken(): String? = _jwtToken.value
 }
 
 @Composable
 fun App() {
 
     val navController = rememberNavController()
-    userAuthorized = remember{mutableStateOf(true)}
-
+    val userAuthorized by remember {
+        derivedStateOf { !MySharedModule.getToken().isNullOrBlank() }
+    }
     MaterialTheme {
         Box(Modifier.fillMaxSize()) {
             MinimalGlowBackground(
@@ -79,7 +81,7 @@ fun App() {
             Scaffold(
                 modifier = Modifier.background(Color.Transparent),
                 bottomBar = {
-                        if (userAuthorized?.value == true) {
+                        if (userAuthorized) {
                             BottomAppBar(
                                 containerColor = Color.Transparent,
                                 actions = {
@@ -113,7 +115,7 @@ fun App() {
                             .fillMaxSize()
                     ) {
                         composable<Profile> { UserView() }
-                        composable<Welcome> { WelcomeScreen() }
+                        composable<Welcome> { WelcomeScreen(navController) }
                         composable<PostList> { ProjectListView() }
                         composable<CreatePost> { ProjectCreateView(navController) }
                     }
