@@ -18,7 +18,7 @@ import kotlin.time.Instant
 @Resource("/api/project")
 class Projects {
     @Resource("/all")
-    class All(val parent: Projects = Projects())
+    class All(val parent: Projects = Projects(), val authorId: String?)
 
     @Resource("/join")
     class Join(val parent: Projects = Projects())
@@ -74,7 +74,7 @@ suspend fun createProject(
     description: String,
     paymentType: PaymentType,
     techStack: List<TechnicalStack>,
-    userId: Int
+    userId: Int,
 ): Boolean {
     val response: HttpResponse = client.post(Projects.Create()) {
         contentType(ContentType.Application.Json)
@@ -84,8 +84,9 @@ suspend fun createProject(
 }
 suspend fun getAllProjects(
     client: HttpClient,
+    authorId: String? = null,
 ): HttpResponse {
-val response: HttpResponse = client.get(Projects.All()) {
+val response: HttpResponse = client.get(Projects.All(authorId = authorId)) {
         contentType(ContentType.Application.Json)
     }
     return response
