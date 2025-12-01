@@ -87,4 +87,18 @@ class ProjectService {
                 return projectRepository.getById(projectId);
         }
 
+        List<GetProjectsResponseDto> searchProjects(String phrase) {
+                return projectRepository.findByTitleContaining(phrase).stream()
+                                .map(project -> GetProjectsResponseDto.builder()
+                                                .id(project.getId())
+                                                .title(project.getTitle())
+                                                .description(project.getDescription())
+                                                .paymentType(project.getPaymentType())
+                                                .techStack(project.getTechStack())
+                                                .authorUsername(project.getAuthor().getUsername())
+                                                .authorId(project.getAuthor().getId())
+                                                .createdAt(project.getCreatedAt())
+                                                .build())
+                                .toList();
+        }
 }

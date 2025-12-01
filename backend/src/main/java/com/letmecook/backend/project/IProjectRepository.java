@@ -10,6 +10,8 @@ interface IProjectRepository {
 
     List<Project> findAll(Specification<Project> spec);
 
+    List<Project> findByTitleContaining(String keyword);
+
     Project getById(Long projectId);
 
     Optional<Project> findById(Long projectId);
