@@ -42,14 +42,14 @@ class InMemoryProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Project> findByTitleContaining(String keyword) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByTitleContaining'");
-    }
-
-    @Override
     public void deleteById(Long projectId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
+
+    @Override
+    public List<Project> findByTitleContainingIgnoreCase(String keyword) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByTitleContainingIgnoreCase'");
     }
 }

@@ -10,7 +10,7 @@ interface IProjectRepository {
 
     List<Project> findAll(Specification<Project> spec);
 
-    List<Project> findByTitleContaining(String keyword);
+    List<Project> findByTitleContainingIgnoreCase(String keyword);
 
     Project getById(Long projectId);
 
