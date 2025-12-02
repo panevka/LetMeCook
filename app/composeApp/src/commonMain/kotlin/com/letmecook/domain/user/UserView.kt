@@ -35,6 +35,7 @@ import app.composeapp.generated.resources.allDrawableResources
 import app.composeapp.generated.resources.avatar
 import app.composeapp.generated.resources.compose_multiplatform
 import com.letmecook.app.AppColors
+import com.letmecook.app.MinimalGlowBackground
 import com.letmecook.app.client
 import com.letmecook.app.currentUser
 import com.letmecook.app.currentUserId
@@ -65,14 +66,6 @@ internal fun UserView () {
             }
         }
 
-//        var mockUser by remember { mutableStateOf(UserDto(
-//            username = "JanKow",
-//            first_name = "Jan",
-//            last_name = "Kowalski",
-//            avatar_url = "https://img.freepik.com/free-psd/yellow-gift-with-golden-ribbon-icon-sign-symbol-3d-background-illustration_56104-2422.jpg",
-//            id = 1
-//        ))}
-
     var mockUser = user;
     if(mockUser == null){
        Text(
@@ -92,10 +85,11 @@ internal fun UserView () {
             modifier = Modifier.fillMaxSize().padding(30.dp).verticalScroll(
                 state = rememberScrollState()
             ),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
 
         ) {
-
+            MinimalGlowBackground()
             KamelImage(
                 resource = asyncPainterResource(data = mockUser.avatar_url),
                 contentDescription = "avatar",
@@ -105,14 +99,6 @@ internal fun UserView () {
                     .clip(RoundedCornerShape(8.dp))
             )
 
-//            Image(
-//                painter = painterResource(Res.drawable.avatar),
-//                contentDescription = "aha",
-//                contentScale = ContentScale.Crop,
-//                modifier = Modifier
-//                    .requiredSize(128.dp)
-//                    .clip(RoundedCornerShape(8.dp))
-//            )
             Text(mockUser.username, style = MaterialTheme.typography.displayMedium, color = Color.White)
 
             Text("${mockUser.first_name} ${mockUser.last_name}" ?: "", style = MaterialTheme.typography.displaySmall, color = Color.White)
@@ -126,8 +112,6 @@ internal fun UserView () {
                 Text(mockUser.bio.toString(), style = MaterialTheme.typography.titleLarge, color = AppColors.PrimaryFontColor)
             }
 
-            Text("Skills", style = MaterialTheme.typography.headlineLarge, color = Color.White, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
-
             Button(
                 onClick = { showPopup = true },
             ){
@@ -136,17 +120,12 @@ internal fun UserView () {
 
         }
 
-
     if (showPopup) {
-        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
-            Column(verticalArrangement = Arrangement.Top){
-//            TextField(
-//                value = username,
-//                onValueChange = { newValue: String ->
-//                    username = newValue
-//                } ,
-//                label = {Text("Username")}
-//            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            MinimalGlowBackground()
+
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+
             TextField(
                 value = firstName,
                 onValueChange = { newValue: String ->
@@ -168,28 +147,7 @@ internal fun UserView () {
                 } ,
                 label = {Text("Bio")}
             )
-//            TextField(
-//                value = mockUser.websiteUrl,
-//                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(websiteUrl = newValue)
-//                } ,
-//                label = {Text("websiteUrl")}
-//            )
-//            TextField(
-//                value = mockUser.avatarUrl,
-//                onValueChange = { newValue: String ->
-//                    mockUser = mockUser.copy(avatarUrl = newValue)
-//                } ,
-//                label = {Text("avatarUrl")}
-//            )
 
-//                TextField(
-//                    value = mockUser.githubUrl,
-//                    onValueChange = { newValue: String ->
-//                        mockUser = mockUser.copy(githubUrl = newValue)
-//                    } ,
-//                    label = {Text("Github Account")}
-//                )
                 Button(onClick = {
                     showPopup = false
                     val newUserData = PatchUserDto(first_name = firstName, last_name = lastName, bio = bio )
