@@ -40,4 +40,16 @@ class InMemoryProjectRepository implements IProjectRepository {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
+
+    @Override
+    public List<Project> findByTitleContaining(String keyword) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByTitleContaining'");
+    }
+
+    @Override
+    public void deleteById(Long projectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
 }

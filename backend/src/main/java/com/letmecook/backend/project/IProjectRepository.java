@@ -14,6 +14,8 @@ interface IProjectRepository {
 
     Project getById(Long projectId);
 
+    void deleteById(Long projectId);
+
     Optional<Project> findById(Long projectId);
 
     Project save(Project project);

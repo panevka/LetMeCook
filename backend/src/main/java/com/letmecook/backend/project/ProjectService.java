@@ -87,6 +87,10 @@ class ProjectService {
                 return projectRepository.getById(projectId);
         }
 
+        void deleteProjectById(Long projectId) {
+                projectRepository.deleteById(projectId);
+        }
+
         List<GetProjectsResponseDto> searchProjects(String phrase) {
                 return projectRepository.findByTitleContaining(phrase).stream()
                                 .map(project -> GetProjectsResponseDto.builder()
