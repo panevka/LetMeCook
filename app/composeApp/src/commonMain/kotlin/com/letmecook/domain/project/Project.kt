@@ -26,6 +26,8 @@ class Projects {
     @Resource("")
     class Create(val parent: Projects = Projects())
 
+    @Resource("")
+    class Search(val parent: Projects = Projects(), val search: String)
 }
 
 @Serializable
@@ -87,6 +89,16 @@ suspend fun getAllProjects(
     authorId: String? = null,
 ): HttpResponse {
 val response: HttpResponse = client.get(Projects.All(authorId = authorId)) {
+        contentType(ContentType.Application.Json)
+    }
+    return response
+}
+
+suspend fun searchProjects(
+    client: HttpClient,
+    search: String
+): HttpResponse {
+    val response: HttpResponse = client.get(Projects.Search(search = search)) {
         contentType(ContentType.Application.Json)
     }
     return response
