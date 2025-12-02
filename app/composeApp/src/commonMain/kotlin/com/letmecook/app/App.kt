@@ -7,33 +7,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.letmecook.domain.project.ApplicationsView
+import com.letmecook.domain.project.MyProjectsView
 import com.letmecook.domain.project.ProjectCreateView
-import com.letmecook.domain.project.ProjectDto
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import com.letmecook.domain.project.ProjectListView
-import com.letmecook.domain.project.Projects
 import com.letmecook.domain.user.UserView
-import io.ktor.client.call.body
-import io.ktor.client.plugins.resources.get
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
-import io.ktor.util.logging.Logger
-import io.ktor.util.rootCause
 import kotlinx.serialization.Serializable
 
 
@@ -134,7 +121,7 @@ fun App() {
                             WelcomeScreen(navController)
                         }
                         composable<PostList> { ProjectListView() }
-                        composable<MyApplications> { ApplicationsView() }
+                        composable<MyApplications> { MyProjectsView() }
                         composable<CreatePost> { ProjectCreateView(navController) }
                     }
 

@@ -2,6 +2,7 @@ package com.letmecook.domain.project
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.resources.delete
 import io.ktor.client.plugins.resources.get
 import io.ktor.client.plugins.resources.post
 import io.ktor.client.request.setBody
@@ -22,6 +23,9 @@ class Projects {
 
     @Resource("/join")
     class Join(val parent: Projects = Projects())
+
+    @Resource("/{projectId}")
+    class Delete(val parent: Projects = Projects(), val projectId: Int)
 
     @Resource("")
     class Create(val parent: Projects = Projects())
@@ -102,4 +106,15 @@ suspend fun searchProjects(
         contentType(ContentType.Application.Json)
     }
     return response
+}
+
+
+suspend fun deleteProject(
+    client: HttpClient,
+    projectId: Int,
+): Boolean {
+    val response: HttpResponse = client.delete(Projects.Delete(projectId = projectId)) {
+        contentType(ContentType.Application.Json)
+    }
+    return response.status == HttpStatusCode.OK
 }
