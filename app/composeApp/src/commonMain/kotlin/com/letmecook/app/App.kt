@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.letmecook.domain.project.ApplicationsView
 import com.letmecook.domain.project.ProjectCreateView
 import com.letmecook.domain.project.ProjectDto
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -42,6 +43,8 @@ object Profile
 @Serializable
 object PostList
 
+@Serializable
+object MyApplications
 
 @Serializable
 object CreatePost
@@ -71,14 +74,7 @@ fun App() {
 
     val navController = rememberNavController()
     val userAuthorized by remember {
-        derivedStateOf { !MySharedModule.getToken().isNullOrBlank() }
-    }
-    LaunchedEffect(userAuthorized) {
-        if (userAuthorized) {
-            navController.navigate(PostList) {
-                popUpTo(Welcome) { inclusive = true }
-            }
-        }
+        derivedStateOf { true }
     }
 
     MaterialTheme {
@@ -106,6 +102,9 @@ fun App() {
                                     ) {
                                         Text("+")
                                     }
+                                    Button(onClick = { navController.navigate(MyApplications) }) {
+                                        Text("My Applications")
+                                    }
                                 },
                             )
                     }
@@ -123,8 +122,19 @@ fun App() {
                             .fillMaxSize()
                     ) {
                         composable<Profile> { UserView() }
-                        composable<Welcome> { WelcomeScreen(navController) }
+                        composable<Welcome> {
+                            LaunchedEffect(userAuthorized) {
+                                if (userAuthorized) {
+                                    navController.navigate(PostList) {
+                                        popUpTo(Welcome) { inclusive = true }
+                                    }
+                                }
+                            }
+
+                            WelcomeScreen(navController)
+                        }
                         composable<PostList> { ProjectListView() }
+                        composable<MyApplications> { ApplicationsView() }
                         composable<CreatePost> { ProjectCreateView(navController) }
                     }
 
