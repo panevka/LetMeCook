@@ -61,7 +61,7 @@ fun App() {
 
     val navController = rememberNavController()
     val userAuthorized by remember {
-        derivedStateOf { true }
+        derivedStateOf { !MySharedModule.getToken().isNullOrBlank() }
     }
 
     MaterialTheme {
