@@ -23,7 +23,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack screenOptions={{ headerShown: false }}>
           <Stack.Protected guard={authStatus === "UNAUTHORIZED"}>
             <Stack.Screen name="auth" />
           </Stack.Protected>
