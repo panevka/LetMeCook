@@ -8,6 +8,8 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { ThemeProvider as BnaThemeProvider } from "@/theme/theme-provider";
+
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import "../global.css";
 
@@ -23,18 +25,20 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Protected guard={authStatus === "UNAUTHORIZED"}>
-            <Stack.Screen name="auth" />
-          </Stack.Protected>
+      <BnaThemeProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Protected guard={authStatus === "UNAUTHORIZED"}>
+              <Stack.Screen name="auth" />
+            </Stack.Protected>
 
-          <Stack.Protected guard={authStatus !== "UNAUTHORIZED"}>
-            <Stack.Screen name="(tabs)" />
-          </Stack.Protected>
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+            <Stack.Protected guard={authStatus !== "UNAUTHORIZED"}>
+              <Stack.Screen name="(tabs)" />
+            </Stack.Protected>
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </BnaThemeProvider>
     </QueryClientProvider>
   );
 }
