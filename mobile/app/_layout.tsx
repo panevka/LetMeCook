@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import "../global.css";
 
 import { queryClient } from "@/lib/api-client";
 import { QueryClientProvider } from "@tanstack/react-query";
