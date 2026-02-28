@@ -24,16 +24,18 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <BnaThemeProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Protected guard={!isAuthenticated}>
-                <Stack.Screen name="auth" />
-              </Stack.Protected>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Protected guard={!isAuthenticated}>
+              <Stack.Screen name="auth" />
+            </Stack.Protected>
 
-              <Stack.Protected guard={isAuthenticated}>
-                <Stack.Screen name="(tabs)" />
-              </Stack.Protected>
-            </Stack>
+            <Stack.Protected guard={isAuthenticated}>
+              <Stack.Screen name="(tabs)" />
+            </Stack.Protected>
+          </Stack>
           <StatusBar style="auto" />
         </ThemeProvider>
       </BnaThemeProvider>
