@@ -1,6 +1,7 @@
 {
   "name": "letmecook",
   "version": "1.0.0",
+  "main": "./src/app.tsx",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",

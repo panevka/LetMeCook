@@ -1,5 +1,5 @@
 import { useColor } from '@/hooks/useColor';
-import { FONT_SIZE } from '@/theme/globals';
+import { FONT_SIZE } from '@/lib/theme/globals';
 import React, { forwardRef } from 'react';
 import {
   Text as RNText,

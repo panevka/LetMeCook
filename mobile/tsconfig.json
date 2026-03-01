@@ -27,7 +27,7 @@
     "noStrictGenericChecks": false,
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },

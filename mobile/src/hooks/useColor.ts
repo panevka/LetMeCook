@@ -1,5 +1,5 @@
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Colors } from '@/theme/colors';
+import { Colors } from '@/lib/theme/colors';
 
 export function useColor(
   colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
