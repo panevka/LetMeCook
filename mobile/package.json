@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint && npx depcruise .",
+    "lint": "expo lint && npx depcruise . && npx ast-grep scan",
     "lint:fix": "expo lint --fix && npx depcruise ."
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@ast-grep/cli": "^0.41.0",
     "@types/react": "~19.1.0",
     "babel-preset-expo": "^54.0.10",
     "dependency-cruiser": "^17.3.8",

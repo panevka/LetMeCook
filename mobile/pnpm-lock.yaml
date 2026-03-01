@@ -102,6 +102,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@ast-grep/cli':
+        specifier: ^0.41.0
+        version: 0.41.0
       '@types/react':
         specifier: ~19.1.0
         version: 19.1.17
@@ -149,6 +152,55 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@ast-grep/cli-darwin-arm64@0.41.0':
+    resolution: {integrity: sha512-nSOVlGx0qynniprYXedkQaHcuTs6i04DZumaXFXcjcbl18qEuAme5uWNa1H6BEugRzGXQqJJo0IDm5MPeLYSyw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@ast-grep/cli-darwin-x64@0.41.0':
+    resolution: {integrity: sha512-Jp8wLwkS2bpaxpms5w0MI5FpdrmPd1ReK8GJ+dXgIl/iyTFzXxgZYllY5tH69MFoBDxonmAZADppcBIyeSp7Xw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@ast-grep/cli-linux-arm64-gnu@0.41.0':
+    resolution: {integrity: sha512-z9etSzPP1x737H4JHitH03V8aEeRO55Mn0fo9KOZBsVlApMFjtjf9SZClM+oTNGlPCidjypYHtRsx/JdZhvkUQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@ast-grep/cli-linux-x64-gnu@0.41.0':
+    resolution: {integrity: sha512-FTJVheESkQEFeBKx+trHIGFYOg+n9FjeArOjtrs89eYe6n3oSp3nfLeJNZwTG5Lv3NNTu2oXL/gg9UtE6D/3eg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@ast-grep/cli-win32-arm64-msvc@0.41.0':
+    resolution: {integrity: sha512-mjVDDneU4E+BHohVv/jjSKe0nkwtnjWFsSaC3D9WKR6oNQ+F4kdBbaA5pziCdY6EvYCMsxww1LvE1OVtlPjk7w==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@ast-grep/cli-win32-ia32-msvc@0.41.0':
+    resolution: {integrity: sha512-nhmonUwp+lRQ62IgPC8O52ra/TktLJpTH8D8bwbiVN4vo/MRGdN37NgwlGX9DkQ+NBBhD+FdPG+a29tT+ZZUng==}
+    engines: {node: '>= 10'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@ast-grep/cli-win32-x64-msvc@0.41.0':
+    resolution: {integrity: sha512-xTlt7vR1yqHnPo0SG77Art2iDihKFk5o4lEFXG3UoMV3+Ugd2d9wmJCoMx4uT4n67ITLej8jzZM6P+I0rYC/bg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@ast-grep/cli@0.41.0':
+    resolution: {integrity: sha512-n0SMA1qHB8tSW/j8FunecKvHQNGzdSGOkd8oAcb5lrbYaGmvmSDtR8izw14cySANaWS5Jc7PJBKppw1ZKPF8jg==}
+    engines: {node: '>= 12.0.0'}
+    hasBin: true
 
   '@babel/code-frame@7.10.4':
     resolution: {integrity: sha512-vG6SvB6oYEhvgisZNFRmRCUkLz11c7rp+tbNTynGqc6mS1d5ATd/sGyV6W0KZZnXRKMTzZDRgQT3Ou9jhpAfUg==}
@@ -1248,15 +1300,6 @@ packages:
     peerDependenciesMeta:
       '@react-native-masked-view/masked-view':
         optional: true
-
-  '@react-navigation/native-stack@7.13.0':
-    resolution: {integrity: sha512-5OOp1IKEd5woHl9hGBU0qCAfrQ4+7Tqej0HzDzGQeXzS8tg9gq84x1qUdRvFk5BXbhuAyvJliY9F1/I07d2X0A==}
-    peerDependencies:
-      '@react-navigation/native': ^7.1.28
-      react: '>= 18.2.0'
-      react-native: '*'
-      react-native-safe-area-context: '>= 4.0.0'
-      react-native-screens: '>= 4.0.0'
 
   '@react-navigation/native-stack@7.14.2':
     resolution: {integrity: sha512-/nKxFAFSUSGV+NSXrXXcWEcGAHdyp8RyWjoGMDzVPdBhjCLblVSgHWx5y4mm+k0de9V1pkjsftUaroP7rQckzw==}
@@ -4807,6 +4850,39 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
+  '@ast-grep/cli-darwin-arm64@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-darwin-x64@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-linux-arm64-gnu@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-linux-x64-gnu@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-win32-arm64-msvc@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-win32-ia32-msvc@0.41.0':
+    optional: true
+
+  '@ast-grep/cli-win32-x64-msvc@0.41.0':
+    optional: true
+
+  '@ast-grep/cli@0.41.0':
+    dependencies:
+      detect-libc: 2.1.2
+    optionalDependencies:
+      '@ast-grep/cli-darwin-arm64': 0.41.0
+      '@ast-grep/cli-darwin-x64': 0.41.0
+      '@ast-grep/cli-linux-arm64-gnu': 0.41.0
+      '@ast-grep/cli-linux-x64-gnu': 0.41.0
+      '@ast-grep/cli-win32-arm64-msvc': 0.41.0
+      '@ast-grep/cli-win32-ia32-msvc': 0.41.0
+      '@ast-grep/cli-win32-x64-msvc': 0.41.0
+
   '@babel/code-frame@7.10.4':
     dependencies:
       '@babel/highlight': 7.25.9
@@ -6290,21 +6366,6 @@ snapshots:
       use-latest-callback: 0.2.6(react@19.1.0)
       use-sync-external-store: 1.6.0(react@19.1.0)
 
-  '@react-navigation/native-stack@7.13.0(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-screens@4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      '@react-navigation/elements': 2.9.5(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      '@react-navigation/native': 7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      color: 4.2.3
-      react: 19.1.0
-      react-native: 0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0)
-      react-native-safe-area-context: 5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      react-native-screens: 4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      sf-symbols-typescript: 2.2.0
-      warn-once: 0.1.1
-    transitivePeerDependencies:
-      - '@react-native-masked-view/masked-view'
-    optional: true
-
   '@react-navigation/native-stack@7.14.2(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-screens@4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@react-navigation/elements': 2.9.8(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -7732,7 +7793,7 @@ snapshots:
       '@radix-ui/react-tabs': 1.1.13(@types/react@19.1.17)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@react-navigation/bottom-tabs': 7.14.0(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-screens@4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       '@react-navigation/native': 7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      '@react-navigation/native-stack': 7.13.0(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-screens@4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+      '@react-navigation/native-stack': 7.14.2(@react-navigation/native@7.1.28(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.2(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-screens@4.16.0(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       client-only: 0.0.1
       debug: 4.4.3
       escape-string-regexp: 4.0.0
