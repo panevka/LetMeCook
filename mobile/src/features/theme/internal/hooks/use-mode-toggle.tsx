@@ -1,4 +1,4 @@
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/features/theme/internal/hooks/use-color-scheme';
 import { useState } from 'react';
 import { Appearance, ColorSchemeName } from 'react-native';
 

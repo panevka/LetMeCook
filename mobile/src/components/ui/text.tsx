@@ -1,5 +1,4 @@
-import { useColor } from '@/hooks/useColor';
-import { FONT_SIZE } from '@/lib/theme/globals';
+import { FONT_SIZE, useColor } from '@/features/theme/api'
 import React, { forwardRef } from 'react';
 import {
   Text as RNText,

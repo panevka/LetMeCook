@@ -4,8 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/lib/theme/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Colors, useColorScheme } from "@/features/theme/api";
 
 export function Collapsible({
   children,

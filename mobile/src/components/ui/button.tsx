@@ -1,8 +1,8 @@
 import { Icon } from '@/components/ui/icon';
 import { ButtonSpinner, SpinnerVariant } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { useColor } from '@/hooks/useColor';
-import { CORNERS, FONT_SIZE, HEIGHT } from '@/lib/theme/globals';
+import { useColor } from '@/features/theme/api';
+import { CORNERS, FONT_SIZE, HEIGHT } from '@/features/theme/api';
 import * as Haptics from 'expo-haptics';
 import { LucideProps } from 'lucide-react-native';
 import { forwardRef } from 'react';

@@ -10,12 +10,12 @@ import {
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
-import { ThemeProvider as BnaThemeProvider } from "@/lib/theme/theme-provider";
+import { ThemeProvider as BnaThemeProvider } from "@/features/theme/api";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import "@/lib/global.css";
+import { useColorScheme } from "@/features/theme/api";
+import "@/features/theme/api/global.css";
 
-import { queryClient } from "@/lib/api-client";
+import { queryClient } from "@/features/http-client/api";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { LoginPage } from '@/features/auth/api';
 

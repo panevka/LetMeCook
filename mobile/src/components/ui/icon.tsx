@@ -1,4 +1,5 @@
-import { useColor } from '@/hooks/useColor';
+import { useColor } from "@/features/theme/api";
+
 import { LucideProps } from 'lucide-react-native';
 import React from 'react';
 

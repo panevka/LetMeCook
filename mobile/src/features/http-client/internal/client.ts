@@ -2,7 +2,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 
-import { env } from "@/lib/env";
+import { env } from "@/features/env/api";
 
 export const queryClient = new QueryClient();
 

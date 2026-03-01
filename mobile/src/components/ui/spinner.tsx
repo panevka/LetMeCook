@@ -1,6 +1,8 @@
 import { Text } from '@/components/ui/text';
-import { useColor } from '@/hooks/useColor';
-import { BORDER_RADIUS, CORNERS, FONT_SIZE } from '@/lib/theme/globals';
+import { useColor } from '@/features/theme/api';
+
+
+import { BORDER_RADIUS, CORNERS, FONT_SIZE } from '@/features/theme/api';
 import { Loader2 } from 'lucide-react-native';
 import React, { useEffect, useMemo } from 'react';
 import { ActivityIndicator, StyleSheet, View, ViewStyle } from 'react-native';
