@@ -1,9 +1,12 @@
 import { z } from 'zod'
 
 const envSchema = z.object({
-  EXPO_PUBLIC_API_URL: z.string().url(),
+  EXPO_PUBLIC_API_URL: z.url(),
 });
 
 type Env = z.infer<typeof envSchema>;
 
-export const env = envSchema.parse(process.env);
+const env: Readonly<Env> = envSchema.parse(process.env);
+Object.freeze(env); // runtime precaution
+
+export { env };
