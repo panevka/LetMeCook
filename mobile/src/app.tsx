@@ -17,11 +17,11 @@ import "@/features/theme/api/global.css";
 
 import { queryClient } from "@/features/http-client/api";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { LoginPage } from '@/features/auth/api';
+import { LoginRoute } from '@/features/auth/api';
 
 const RootStack = createNativeStackNavigator({
   screens: {
-    Home: LoginPage,
+    Home: LoginRoute,
   },
 });
 
