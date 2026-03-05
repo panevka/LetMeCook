@@ -17,6 +17,9 @@ export type RootStackParamsMap = {
 };
 
 const rootStack = createNativeStackNavigator({
+  screenOptions: {
+    headerShown: false
+  },
   screens: routes
 });
 
