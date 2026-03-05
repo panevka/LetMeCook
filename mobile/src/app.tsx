@@ -1,5 +1,3 @@
-import { createStaticNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { registerRootComponent} from 'expo'
 import {
   DarkTheme,
@@ -17,15 +15,7 @@ import "@/features/theme/api/global.css";
 
 import { queryClient } from "@/features/http-client/api";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { LoginRoute } from '@/features/auth/api';
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Home: LoginRoute,
-  },
-});
-
-const Navigation = createStaticNavigation(RootStack);
+import { Navigation } from './features/navigation/api';
 
 registerRootComponent(App);
 

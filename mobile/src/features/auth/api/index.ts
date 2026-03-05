@@ -1,2 +1,3 @@
 export { useAuthenticaton } from "@/features/auth/internal/use-authentication";
-export { LoginRoute } from "@/features/auth/internal/routes/login-route";
+export { loginRoute } from "@/features/auth/internal/routes/login-route";
+export { registrationRoute } from "@/features/auth/internal/routes/register-route";
