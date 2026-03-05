@@ -1,19 +1,58 @@
 package com.letmecook.backend.user;
 
-import lombok.Value;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.letmecook.backend.project.Project;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.With;
 
-@Value
+@Setter
+@Getter
+@Entity
+@Table(name = "users")
 @With
-final class User {
+@Builder
+public final class User {
 
-    private final Long id;
-    private final String username;
-    private final String firstName;
-    private final String lastName;
-    private final String avatarUrl;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private User(Long id, String username, String firstName, String lastName, String avatarUrl) {
+    @Column(nullable = false)
+    private String username;
+
+    private String firstName;
+    private String lastName;
+    private String avatarUrl;
+
+    @Column(unique = true, nullable = false)
+    private BigInteger discordId;
+
+    @ManyToMany(mappedBy = "participants")
+    @Builder.Default
+    private List<Project> projects = new ArrayList<>();
+
+    private String bio;
+
+    protected User() {
+
+    }
+
+    private User(Long id, String username, String firstName, String lastName, String avatarUrl, BigInteger discordId,
+            List<Project> projects, String bio) {
         if (username == null) {
             throw new IllegalArgumentException("Username cannot be null");
         }
@@ -44,28 +83,24 @@ final class User {
         if (avatarUrl != null && avatarUrl.isBlank()) {
             throw new IllegalArgumentException("Avatar URL cannot be blank");
         }
+        if (avatarUrl != null && avatarUrl.isEmpty()) {
+            throw new IllegalArgumentException("Avatar URL cannot be empty");
+        }
+        if (avatarUrl != null && avatarUrl.length() == 0) {
+            throw new IllegalArgumentException("Avatar URL cannot be empty");
+        }
+        if (discordId == null) {
+            throw new IllegalArgumentException("Discord ID is required");
+        }
 
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
-    }
-
-    static User create(String username) {
-        return new User(null, username, null, null, null);
-    }
-
-    static User create(String username, String firstName) {
-        return new User(null, username, firstName, null, null);
-    }
-
-    static User create(String username, String firstName, String lastName) {
-        return new User(null, username, firstName, lastName, null);
-    }
-
-    static User create(String username, String firstName, String lastName, String avatarUrl) {
-        return new User(null, username, firstName, lastName, avatarUrl);
+        this.discordId = discordId;
+        this.projects = projects;
+        this.bio = bio;
     }
 
 }

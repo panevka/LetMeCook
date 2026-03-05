@@ -3,6 +3,9 @@ package com.letmecook.backend.project;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.data.jpa.domain.Specification;
 
 class InMemoryProjectRepository implements IProjectRepository {
     private Map<Long, Project> projects = new HashMap<>();
@@ -23,8 +26,30 @@ class InMemoryProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public Optional<Project> findById(Long projectId) {
+        return Optional.ofNullable(projects.get(projectId));
+    }
+
+    @Override
     public Project getById(Long projectId) {
         return projects.get(projectId);
     }
 
+    @Override
+    public List<Project> findAll(Specification<Project> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public void deleteById(Long projectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
+
+    @Override
+    public List<Project> findByTitleContainingIgnoreCase(String keyword) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByTitleContainingIgnoreCase'");
+    }
 }

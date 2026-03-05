@@ -1,6 +1,15 @@
 package com.letmecook.backend.user;
 
-class UserService {
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.letmecook.backend.common.PatchUtil;
+import com.letmecook.backend.user.dto.GetUserDto;
+import com.letmecook.backend.user.dto.PatchUserDto;
+
+@Service
+public class UserService {
 
     private final IUserRepository userRepository;
 
@@ -8,23 +17,74 @@ class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(String username, String firstName, String lastName) {
-        User savedUser = userRepository.save(User.create(username, firstName, lastName));
+    private String getAvatarUrl(String avatarId, String userId) {
+        if (avatarId == null) {
+            return "https://cdn.discordapp.com/embed/avatars/0.png";
+        }
+
+        String avatarUrl = String.format("https://cdn.discordapp.com/avatars/%s/%s.png", userId, avatarId);
+
+        return avatarUrl;
+    }
+
+    public User createUser(OAuth2UserDiscordDto dto) {
+
+        String avatarUrl = getAvatarUrl(dto.getAvatarId(), dto.getId().toString());
+
+        User user = User.builder()
+                .discordId(dto.getId())
+                .username(dto.getGlobalName())
+                .avatarUrl(avatarUrl)
+                .build();
+
+        User savedUser = userRepository.save(user);
         return savedUser;
     }
 
-    public User createUser(String username, String firstName) {
-        User savedUser = userRepository.save(User.create(username, firstName));
-        return savedUser;
+    public Optional<User> getUserById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        return userOptional;
     }
 
-    public User createUser(String username) {
-        User savedUser = userRepository.save(User.create(username));
-        return savedUser;
+    public Optional<User> findByDiscordId(Long userDiscordId) {
+        Optional<User> userOptional = userRepository.findByDiscordId(userDiscordId);
+
+        return userOptional;
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.getById(userId);
+    public GetUserDto getUserProfile(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        GetUserDto dto = GetUserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .avatarUrl(user.getAvatarUrl())
+                .bio(user.getBio())
+                .build();
+
+        return dto;
+    }
+
+    public GetUserDto updateUserProfile(Long userId, PatchUserDto dto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        PatchUtil.applyPatch(dto, user);
+
+        userRepository.save(user);
+
+        return GetUserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .avatarUrl(user.getAvatarUrl())
+                .bio(user.getBio())
+                .build();
     }
 
 }

@@ -1,25 +1,23 @@
 package com.letmecook.app
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.letmecook.domain.account.LoginView
-import com.letmecook.domain.account.SignUpView
+import com.letmecook.domain.project.MyProjectsView
 import com.letmecook.domain.project.ProjectCreateView
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import com.letmecook.domain.project.ProjectListView
 import com.letmecook.domain.user.UserView
@@ -33,60 +31,101 @@ object Profile
 object PostList
 
 @Serializable
-object Login
-
-@Serializable
-object SignUp
+object MyApplications
 
 @Serializable
 object CreatePost
 
+@Serializable
+object Welcome
 val userDb = HashMap<String, String>();
 var currentUser: Pair<String, String>? = null;
 
-var userAuthorized: MutableState<Boolean>? = null;
+var currentUserId = 1;
+
+//var userAuthorized: MutableState<Boolean>? = null;
+
+object MySharedModule {
+    private val _jwtToken = mutableStateOf<String?>(null)
+    val jwtToken: State<String?> get() = _jwtToken
+
+    fun setToken(token: String) {
+        _jwtToken.value = token
+    }
+
+    fun getToken(): String? = _jwtToken.value
+}
+
 @Composable
-@Preview
 fun App() {
 
     val navController = rememberNavController()
-    userAuthorized = remember{mutableStateOf(false)}
+    val userAuthorized by remember {
+        derivedStateOf { !MySharedModule.getToken().isNullOrBlank() }
+    }
 
     MaterialTheme {
-        Scaffold(
-            bottomBar = {
-                if(userAuthorized?.value == true) {
-                    BottomAppBar(
-                        actions = {
-                            Button(onClick = {
-                                navController.navigate(PostList)
-                            }) {
-                                Text("Home")
-                            }
-                            Button(onClick = { navController.navigate(Profile) }) {
-                                Text("Profile")
-                            }
-                            Button(
-                                onClick = { navController.navigate(CreatePost )},
-                            ) {
-                                Text("+")
-                            }
-                        },
-                    )
+        Box(Modifier.fillMaxSize()) {
+            MinimalGlowBackground(
+                modifier = Modifier.matchParentSize()
+            )
+            Scaffold(
+                modifier = Modifier.background(Color.Transparent),
+                bottomBar = {
+                        if (userAuthorized) {
+                            BottomAppBar(
+                                containerColor = Color.Transparent,
+                                actions = {
+                                    Button(onClick = {
+                                        navController.navigate(PostList)
+                                    }) {
+                                        Text("Home")
+                                    }
+                                    Button(onClick = { navController.navigate(Profile) }) {
+                                        Text("Profile")
+                                    }
+                                    Button(
+                                        onClick = { navController.navigate(CreatePost) },
+                                    ) {
+                                        Text("+")
+                                    }
+                                    Button(onClick = { navController.navigate(MyApplications) }) {
+                                        Text("My Applications")
+                                    }
+                                },
+                            )
+                    }
                 }
-            }
-        ) { innerPadding ->
+            ) { innerPadding ->
 
-            NavHost(navController = navController, startDestination = Login, modifier = Modifier
-               .safeContentPadding()
-               .padding(innerPadding)
-                .fillMaxSize()
-            ) {
-                composable<Profile> { UserView() }
-                composable<PostList> { ProjectListView() }
-                composable<Login> { LoginView(navController) }
-                composable<SignUp> { SignUpView(navController) }
-                composable<CreatePost> { ProjectCreateView(navController) }
+                Box(Modifier.fillMaxSize()) {
+                    MinimalGlowBackground(
+                        modifier = Modifier.matchParentSize()
+                    )
+                    NavHost(
+                        navController = navController, startDestination = Welcome, modifier = Modifier
+                        .safeContentPadding()
+                        .padding(innerPadding)
+                            .fillMaxSize()
+                    ) {
+                        composable<Profile> { UserView() }
+                        composable<Welcome> {
+                            LaunchedEffect(userAuthorized) {
+                                if (userAuthorized) {
+                                    navController.navigate(PostList) {
+                                        popUpTo(Welcome) { inclusive = true }
+                                    }
+                                }
+                            }
+
+                            WelcomeScreen(navController)
+                        }
+                        composable<PostList> { ProjectListView() }
+                        composable<MyApplications> { MyProjectsView() }
+                        composable<CreatePost> { ProjectCreateView(navController) }
+                    }
+
+                }
             }
 
         }

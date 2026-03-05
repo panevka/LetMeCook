@@ -2,10 +2,8 @@ package com.letmecook.backend.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 class InMemoryUserRepository implements IUserRepository {
     private final Map<Long, User> usersDb = new HashMap<>();
     private Long currentId = 0L;
@@ -19,8 +17,13 @@ class InMemoryUserRepository implements IUserRepository {
     }
 
     @Override
-    public User getById(Long id) {
-        return usersDb.get(id);
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(usersDb.get(id));
+    }
+
+    @Override
+    public Optional<User> findByDiscordId(Long id) {
+        throw new UnsupportedOperationException("Unimplemented method 'findByDiscordId'");
     }
 
 }

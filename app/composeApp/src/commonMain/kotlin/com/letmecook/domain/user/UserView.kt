@@ -5,29 +5,45 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.composeapp.generated.resources.Res
 import app.composeapp.generated.resources.allDrawableResources
 import app.composeapp.generated.resources.avatar
 import app.composeapp.generated.resources.compose_multiplatform
-import coil3.compose.AsyncImage
-import coil3.compose.rememberAsyncImagePainter
+import com.letmecook.app.AppColors
+import com.letmecook.app.MinimalGlowBackground
+import com.letmecook.app.client
 import com.letmecook.app.currentUser
+import com.letmecook.app.currentUserId
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -36,39 +52,66 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal fun UserView () {
 
         var showPopup by remember { mutableStateOf(false) }
-        var mockUser by remember { mutableStateOf(User(
-            username = "JanKow",
-            firstName = "Jan",
-            lastName = "Kowalski",
-            avatarUrl = "https://img.freepik.com/free-psd/yellow-gift-with-golden-ribbon-icon-sign-symbol-3d-background-illustration_56104-2422.jpg" ,
-            bio = "sample bioooo a123123dfafjkl",
-            websiteUrl ="https://docs.github.com/en/pages" ,
-            githubUrl = "https://github.com/torvalds"
-        ))}
 
-        val fullName = "${mockUser.firstName} ${mockUser.lastName}"
+    var user by remember { mutableStateOf<UserDto?>(null)}
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(true){
+            try {
+                val response: UserDto = getUser(client,currentUserId.toLong()).body()
+                user = response
+            } catch (e: Exception){
+                println("Error fetching user")
+                println(e.printStackTrace())
+            }
+        }
+
+    var mockUser = user;
+    if(mockUser == null){
+       Text(
+           "Could not fetch"
+       )
+        return
+    }
+
+    var firstName by remember { mutableStateOf(mockUser.first_name ?:"")}
+    var lastName by remember { mutableStateOf(mockUser.last_name ?: "")}
+    var bio by remember { mutableStateOf(mockUser.bio ?: "")}
+
+
+        val fullName = "${mockUser.first_name} ${mockUser.last_name}"
 
         Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text("text user profile view")
-            Text("currently logged in user: ${currentUser?.first} ${currentUser?.second}")
+            modifier = Modifier.fillMaxSize().padding(30.dp).verticalScroll(
+                state = rememberScrollState()
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
 
-            Image(
-                painter = painterResource(Res.drawable.avatar),
-                contentDescription = "aha",
+        ) {
+            MinimalGlowBackground()
+            KamelImage(
+                resource = asyncPainterResource(data = mockUser.avatar_url),
+                contentDescription = "avatar",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .requiredSize(64.dp)
+                    .requiredSize(128.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
 
-            Text(mockUser.username, style = MaterialTheme.typography.displayLarge)
-            Text(text=fullName, style = MaterialTheme.typography.titleMedium)
-            Text(text=mockUser.bio ?: "", style = MaterialTheme.typography.bodySmall)
-            Text(text= mockUser.websiteUrl.let { "Website: $it" }, style = MaterialTheme.typography.bodySmall)
+            Text(mockUser.username, style = MaterialTheme.typography.displayMedium, color = Color.White)
 
-            Text(text= mockUser.githubUrl.let { "Github: $it" }, style = MaterialTheme.typography.bodySmall)
+            Text("${mockUser.first_name} ${mockUser.last_name}" ?: "", style = MaterialTheme.typography.displaySmall, color = Color.White)
+
+            Text("About", style = MaterialTheme.typography.headlineLarge, color = Color.White, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
+
+
+            Box(modifier = Modifier.background(AppColors.Primary, shape = RoundedCornerShape(20.dp)).clip(shape = RoundedCornerShape(20.dp)).padding(30.dp)
+
+            ){
+                Text(mockUser.bio.toString(), style = MaterialTheme.typography.titleLarge, color = AppColors.PrimaryFontColor)
+            }
+
             Button(
                 onClick = { showPopup = true },
             ){
@@ -77,61 +120,48 @@ internal fun UserView () {
 
         }
 
-
     if (showPopup) {
-        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
-            Column(verticalArrangement = Arrangement.Top){
+        Box(modifier = Modifier.fillMaxSize()) {
+            MinimalGlowBackground()
+
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+
             TextField(
-                value = mockUser.username,
+                value = firstName,
                 onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(username = newValue)
-                } ,
-                label = {Text("nickname")}
+                    firstName = newValue
+                },
+                label = {Text("First name")}
             )
             TextField(
-                value = mockUser.firstName,
+                value = lastName,
                 onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(firstName = newValue)
-                } ,
-                label = {Text("firstName")}
-            )
-            TextField(
-                value = mockUser.lastName,
-                onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(lastName = newValue)
+                    lastName = newValue
                 } ,
                 label = {Text("lastName")}
             )
             TextField(
-                value = mockUser.bio,
+                value = bio,
                 onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(bio = newValue)
+                    bio = newValue
                 } ,
-                label = {Text("bio")}
-            )
-            TextField(
-                value = mockUser.websiteUrl,
-                onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(websiteUrl = newValue)
-                } ,
-                label = {Text("websiteUrl")}
-            )
-            TextField(
-                value = mockUser.avatarUrl,
-                onValueChange = { newValue: String ->
-                    mockUser = mockUser.copy(avatarUrl = newValue)
-                } ,
-                label = {Text("avatarUrl")}
+                label = {Text("Bio")}
             )
 
-                TextField(
-                    value = mockUser.githubUrl,
-                    onValueChange = { newValue: String ->
-                        mockUser = mockUser.copy(githubUrl = newValue)
-                    } ,
-                    label = {Text("Github Account")}
-                )
-                Button(onClick = { showPopup = false}){
+                Button(onClick = {
+                    showPopup = false
+                    val newUserData = PatchUserDto(first_name = firstName, last_name = lastName, bio = bio )
+
+                    scope.launch {
+                    try {
+                        val response: UserDto = updateUser(client, currentUserId.toLong(), newUserData).body()
+                        user = response;
+                    } catch (e: Exception){
+                        println("Error updating user")
+                        println(e.printStackTrace())
+                    }
+                    }
+                }){
                     Text("Save")
                 }
         }
